@@ -21,7 +21,7 @@
 			</script>
 			<div id="modalEfectivo" class="modal">
 			    <div class="modal-content row">
-			      <h6 class="red-text center"><b>¡Nota!</b></h6><br>
+			      <h3 class="red-text center"><b>¡Nota!</b></h3><br>
 
 			      <h6 class="blue-text"><b>1.- Pasar a dejar el efectivo a la direccion Av. XXXXXX.</b></h6>
 			      <h6 class="blue-text"><b>2.- O transferir a la cuenta 000000000 y enviar el comprobante al Whatsapp 000000.</b></h6>

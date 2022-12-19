@@ -16,38 +16,21 @@ $vales = mysqli_fetch_array(mysqli_query($conn, "SELECT vales FROM `recaudacione
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-	<header>
-		<div class="content-header">
-			<div class="logo"><img src="../img/Logo_propuesta.png"></div>
-			<div class="item"><a href="#somos">¿Quienes somos?</a></div>
-			<div class="item"><a href="#asociado">¡Quiero ser asociado!</a></div>
-			<div class="item"><a href="#recaudacion">Recaudado</a></div>
-			<div class="item"><a href="#contacto">Contactanos</a></div>
-		</div>
-	</header>
     <!-- BANNER -->
 	<div class="contents">
-		<section id="somos">
+		<section id="somos" class="row">
             <div class="content-banner">
                 <div class="banner-text">
-                    <h1>UNIENDO SOMBRERETE</h1>
-                    <h2>RECAUDACIONES</h2>
-                    <table>
-                        <tr>
-                            <td>En Efectivo</td>
-                            <td>En vales</td>
-                        </tr>
-                        <tr>
-                            <td>$10000</td>
-                            <td>$1200</td>
-                        </tr>
-                    </table>
-
+                    <div class="banner-img">
+                    <img src="../img/LogoSIC.png">
                 </div>
-                <div class="banner-img">
-                    <img src="../img/Logo_propuesta.png">
-                </div>
+                <h1>RECAUDACIONES TOTALES</h1>
+            
+                
             </div>
+			
+		</section><br><br><br><br><br><br>
+		<section id="productos" class="row"><br><br><br><br>
 			<h1>Nuestros inicios</h1>
 			<div class="div-flex">
 				<div class="parts">
@@ -61,11 +44,6 @@ $vales = mysqli_fetch_array(mysqli_query($conn, "SELECT vales FROM `recaudacione
 					<p>Gracias a los nuevos talentos de hoy en dia, pudimos ampliar nuestros productos para agregar deliciosos bocadillos dulces y salados a nuestra produccion.</p>
 				</div>
 			</div>
-		</section>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300">
-	  	<path fill="#ffffff" fill-opacity="1" d="M0,32L34.3,42.7C68.6,53,137,75,206,117.3C274.3,160,343,224,411,224C480,224,549,160,617,160C685.7,160,754,224,823,218.7C891.4,213,960,139,1029,128C1097.1,117,1166,171,1234,202.7C1302.9,235,1371,245,1406,250.7L1440,256L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path>
-	    </svg>
-		<section id="productos">
 			<h1>Productos más pedidos</h1>
 			<div class="div-grid">
 				<div class="grid-item">
