@@ -2,40 +2,34 @@
 <html lang="en">
 <head>
 <?php
-  include('fredyNav.php');
+  include('nav.php');
 ?>
-<title>SIC | Inicio Punto de Venta</title>
+<title>SIC | Inicio</title>
 </head>
 <main>
-<script>
-	$(document).ready(function(){
-	    $('#bienvenida').modal();
-	    $('#bienvenida').modal('open'); 
-	 });
-</script>
 <body>
-	<div class="row ">
-		 <img class="materialboxed" width="100%" src="../img/banner1PV.jpg">
+	<div class="row container" name="Recaudado-1">
+		<a name="Recaudado-1"></a>
+		 <br><br><br><br><br><br><br><br><h1>RECAUDADO</h1><br><br><br><br><br><br><br>
 	</div>
- 	<div class="row container">
- 		<h4 class="center-align">Servicios Integrales de Computación</h4>
+ 	<div class="row container" name="Conocenos-2">
+ 		<a name="Conocenos-2"></a>
+ 		<br><br><br><br><br><br><br><br><h4 class="center-align">Servicios Integrales de Computación</h4><br><br><br><br><br><br><br><br>
  	</div>
- 	<!--Modal cortes BIENVENIDA-->
-	<div id="bienvenida" class="modal">
-	  <div class="modal-content">
-			<?php
-	    	$Usuario = $_SESSION['user_name'];
-	    	$MSJ = 'Servicios Integrales de Computación: realiza tus ventas de la mejor manera, sonrie! :)';
-	  	?>
-	    <h3 class="red-text center">¡ Bienvenid@ !</h3><br>
-	    <h4 class="blue-text center"><b><?php echo $Usuario ?></b></h4><br>
-	    <h5><b><?php echo $MSJ ?></b></h5>	     
-	  </div>
-	  <div class="modal-footer">
-	      <a href="#" class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar<i class="material-icons right">close</i></a>
-	  </div>
+ 	<div class="row container" name="Contacto-3">
+ 		<a name="Contacto-3"></a>
+ 		<br><br><br><br><br><br><br><br><h4 class="center-align">Buasapp</h4><br><br><br><br><br><br><br><br>
+ 	</div>
+
+
+
+
+
+	<div class="fixed-action-btn">
+	  <a href="new_asociado.php" class="waves-effect waves-light btn-large"><i class="material-icons left">mood</i>Quiero Ser Asociado <i class="material-icons right">add</i></a>
 	</div>
- 	<!--Modal cortes BIENVENIDA-->
+
+
 </body>
 </main>
 </html>

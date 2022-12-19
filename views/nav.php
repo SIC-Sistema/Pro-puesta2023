@@ -1,6 +1,4 @@
 <?php
-#INCLUIMOS EL PHP DONDE VIENE LA INFORMACION DEL INICIO DE SESSION
-include('../php/is_logged.php');
 #INCLUIMOS EL ARCHIVO CON LOS DATOS Y CONEXXION A LA BASE DE DATOS
 include('../php/conexion.php');
 #GENERAMOS UNA FECHA DEL DIA EN CURSO REFERENTE A LA ZONA HORARIA
@@ -15,7 +13,7 @@ $Hoy = date('Y-m-d');
       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	  <link rel="shortcut icon" href="../img/logo.jpg" type="image/jpg" />
+	  <link rel="shortcut icon" href="../img/logo_ticket.jpg" type="image/jpg" />
       <style rel="stylesheet">
 		.dropdown-content{  overflow: visible;	}
 	  </style>
@@ -29,38 +27,13 @@ $Hoy = date('Y-m-d');
 				<i class="material-icons">menu</i>
 			</a>
 			<ul class="right hide-on-med-and-down">
-				<li><a class='dropdown-button indigo-text' data-target='dropdown1'><i class="material-icons left">library_books</i><b>Asociados</b> <i class="material-icons right">arrow_drop_down</i></a></li>
-				<ul id='dropdown1' class='dropdown-content'>
-					<li><a href = "proveedores_punto_venta.php" class="indigo-text"><i class="material-icons">person_pin</i>Proveedores </a></li>  			 
- 				 </ul>
-				<li><a class='dropdown-button indigo-text' data-target='dropdown2'><i class="material-icons left">library_add</i><b>Proveedores</b><span class=" new badge pink" data-badge-caption="">7</span><i class="material-icons right">arrow_drop_down</i></a></li>
-				<ul id='dropdown2' class='dropdown-content'>
-					<li><a href = "almacenes_punto_venta.php" class="indigo-text"><i class="material-icons">assignment_turned_in</i>Almacenes</a></li>
- 				</ul>
- 				<li><a class='dropdown-button indigo-text' data-target='dropdown5'><i class="material-icons left">local_grocery_store</i><b>Beneficiados</b> <i class="material-icons right">arrow_drop_down</i></a></li>
-				<ul id='dropdown5' class='dropdown-content'>   
-					<li><a onclick = 'nueva_venta()' class="indigo-text"><i class="material-icons">monetization_on</i>Nueva Venta</a></li>   
-				</ul>
- 				<li><a class='dropdown-button indigo-text' data-target='dropdown4'><b><?php echo $_SESSION['user_name'];?> </b><i class="material-icons right">arrow_drop_down</i></a></li>
-				<ul id='dropdown4' class='dropdown-content'>
-				    <li><a href="../../SIC5.0" class="indigo-text"><i class="material-icons">laptop_mac</i>Sistema SIC5.0 </a></li>
-				    <li><a href="../php/cerrar_sesion.php" class="indigo-text"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
- 				 </ul>
-			</ul>
-			<ul class="right hide-on-large-only hide-on-small-only">
-				<li><a class='dropdown-button indigo-text' data-target='dropdown10'><b><?php echo $_SESSION['user_name'];?> </b><i class="material-icons right">arrow_drop_down</i></a></li>
-				<ul id='dropdown10' class='dropdown-content'>
-					<li><a href="../../SIC5.0" class="indigo-text"><i class="material-icons">laptop_mac</i>Sistema SIC5.0 </a></li>
-				    <li><a href="../php/cerrar_sesion.php" class="indigo-text"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
- 				 </ul>
-			</ul>
-			<ul class="right hide-on-med-and-up">
-		        <li><a class='dropdown-button indigo-text' data-target='dropdown8'><i class="material-icons left">account_circle</i><b>></b></a></li>
-				<ul id='dropdown8' class='dropdown-content'>
-					<li><a href="../../SIC5.0" class="indigo-text"><i class="material-icons">laptop_mac</i>Sistema SIC5.0 </a></li>
-				   <li><a href="../php/cerrar_sesion.php" class="indigo-text"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
- 				</ul>
-		    </ul>			
+				<li><a class='dropdown-button red-text' href="home.php#Recaudado-1"><i class="material-icons left">monetization_on</i><b>Recaudado</b> </a></li>
+				
+				<li><a class='dropdown-button amber-text' href="home.php#Conocenos-2"><i class="material-icons left">accessibility</i><b>Conocenos</b></a></li>
+				
+ 				<li><a class='dropdown-button green-text' href="home.php#Contacto-3"><i class="material-icons left">account_box</i><b>Contacto</b> </a></li> 				
+ 				<li><a class='dropdown-button grey-text text-darken-3' href="new_asociado.php"><i class="material-icons left">add</i><b>Asociados</b> </a></li> 		
+			</ul>			
 		</div>		
 	</nav>
 	</div>
@@ -68,48 +41,14 @@ $Hoy = date('Y-m-d');
 	<ul class="sidenav indigo lighten-5" id="menu-responsive" style="width: 270px;">
 		<h2>Menú</h2>
     	<li><div class="divider"></div></li><br>
-		<li>
-	    	<ul class="collapsible collapsible-accordion">
-	    		<li>
-	    			<div class="collapsible-header"><i class="material-icons">library_books</i>Asociados <i class="material-icons right">arrow_drop_down</i></div>
-		      		<div class="collapsible-body indigo lighten-5">
-		      		    <span>
-		      			  <ul>
-							<li><a href = "proveedores_punto_venta.php"><i class="material-icons">person_pin</i>Proveedores </a></li>
-					      </ul>
-					    </span>
-		      		</div>    			
-	    		</li>	    			
-	    	</ul>	     				
-	    </li>
-		<li>
-	    	<ul class="collapsible collapsible-accordion">
-	    		<li>
-	    			<div class="collapsible-header"><i class="material-icons">library_add</i>Proveedores <i class="material-icons right">arrow_drop_down</i></div>
-		      		<div class="collapsible-body indigo lighten-5">
-		      			<span>
-		      			  <ul>
-							<li><a href = "almacenes_punto_venta.php"><i class="material-icons">assignment_turned_in</i>Almacenes</a></li>
-					      </ul>
-					    </span>
-		      		</div>    			
-	    		</li>	    			
-	    	</ul>	     				
-	    </li>
-		<li>
-	    	<ul class="collapsible collapsible-accordion">
-	    		<li>
-	    			<div class="collapsible-header"><i class="material-icons">local_grocery_store</i>Beneficiados <i class="material-icons right">arrow_drop_down</i></div>
-		      		<div class="collapsible-body  indigo lighten-5">
-		      			<span>
-		      			  <ul>		     				
-							<li><a onclick = 'nueva_venta()'><i class="material-icons">monetization_on</i>Nueva Venta</a></li>   
-					      </ul>
-					    </span>
-		      		</div>    			
-	    		</li>	    			
-	    	</ul>	     				
-	    </li>
+
+		<li><a class='dropdown-button indigo-text' href="home.php#Recaudado-1"><i class="material-icons left">monetization_on</i><b>Recaudado</b> </a></li>
+				
+		<li><a class='dropdown-button indigo-text' href="home.php#Conocenos-2"><i class="material-icons left">accessibility</i><b>Conocenos</b></a></li>
+
+		<li><a class='dropdown-button indigo-text' href="home.php#Contacto-3"><i class="material-icons left">account_box</i><b>Contacto</b> </a></li> 	
+
+ 		<li><a class='dropdown-button indigo-text' href="new_asociado.php"><i class="material-icons left">add</i><b>Asociados</b> </a></li> 				
 	</ul>
 	<?php 
 	include('../views/modals.php');
