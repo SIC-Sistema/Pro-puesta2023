@@ -7,18 +7,28 @@
     ?>
     <script>
       //FUNCION QUE HACE LA INSERCION DEL ASOCIADO
-      function insert_articulo() {
+      function insert_asociado() {
 
         //PRIMERO VAMOS Y BUSCAMOS EN ESTE MISMO ARCHIVO LA INFORMCION REQUERIDA Y LA ASIGNAMOS A UNA VARIABLE
         var textoNombreAsociado = $("input#nombre_asociado").val();
         var textoCantidad = $("input#cantidad_asociado").val();
         var textoTelefono = $("input#telefono_asociado").val();
-
+        Entra = false;
         if (document.getElementById('esepecie').checked==true) {
           var textoNombreEmp = $("input#nombre_emp").val();
           var textoDireccion = $("input#direccion_emp").val();
           var textoCorreo = $("input#correo_emp").val();
           tipo = 'Especie';
+          Entra = true;
+          if(textoNombreEmp == ""){
+            texto = 'El campo Nombre Empresa se encuentra vacío';
+          }else if(textoDireccion == ""){
+            texto = 'El campo Dirección se encuentra vacío';
+          }else if(textoCorreo == ""){
+            texto = 'El campo Correo se encuentra vacío';
+          }else {
+            Entra = false;
+          }
         }else{
           tipo = 'Efectivo'; textoNombreEmp = ''; textoCorreo = ''; textoDireccion = '';
         }
@@ -31,35 +41,25 @@
           M.toast({html: 'El campo Telefono se encuentra vacío.', classes: 'rounded'});
         }else if (textoCantidad == "") {
           M.toast({html: 'El campo Cantidad se encuentra vacío.', classes: 'rounded'});
-        }else if(textoDescripcion.length == ""){
-          M.toast({html: 'El campo Descripción se encuentra vacío.', classes: 'rounded'});
-        }else if(textoPrecio <= 0){
-          M.toast({html: 'El campo Precio no puede ser menor o igual a 0.', classes: 'rounded'});
-        }else if(textoUnidad == ""){
-          M.toast({html: 'El campo Unidad se encuentra vacío.', classes: 'rounded'});
-        }else if(textoCUnidad == ""){
-          M.toast({html: 'El campo Codigo Unidad se encuentra vacío.', classes: 'rounded'});
-        }else if(textoCFiscal == ""){
-          M.toast({html: 'El campo Codigo Fiscal se encuentra vacío.', classes: 'rounded'});
-        }else if(textoCategoria == 0){
-          M.toast({html: 'El campo de Categoria se encuentra vacío.', classes: 'rounded'});
-        }else{
+        }else if (document.getElementById('esepecie').checked==false && document.getElementById('efectivo').checked==false) { 
+          M.toast({html: 'Seleccione una casilla para el tipo de donativo', classes: 'rounded'});
+        }else if(Entra){
+            M.toast({html: texto, classes: 'rounded'});
+        }else {
           //SI LOS IF NO SE CUMPLEN QUIERE DECIR QUE LA INFORMACION CUENTA CON TODO LO REQUERIDO
-          //MEDIANTE EL METODO POST ENVIAMOS UN ARRAY CON LA INFORMACION AL ARCHIVO EN LA DIRECCION "../php/control_articulo.php"
-          $.post("../php/control_articulo.php", {
+          //MEDIANTE EL METODO POST ENVIAMOS UN ARRAY CON LA INFORMACION AL ARCHIVO EN LA DIRECCION "../php/control_asociados.php"
+          $.post("../php/control_asociados.php", {
             //Cada valor se separa por una ,
               accion: 0,
-              valorCodigo: textoCodigo,
-              valorNombre: textoNombre,
-              valorModelo: textoModelo,
-              valorDescripcion: textoDescripcion,
-              valorPrecio: textoPrecio,
-              valorUnidad: textoUnidad,
-              valorCUnidad: textoCUnidad,
-              valorCFiscal: textoCFiscal,
-              valorCategoria: textoCategoria,
+              valorNombreAsociado: textoNombreAsociado,
+              valorCantidad: textoCantidad,
+              valorTelefono: textoTelefono,
+              tipo: tipo,
+              valorNombreEmp: textoNombreEmp,
+              valorDireccion: textoDireccion,
+              valorCorreo: textoCorreo,
             }, function(mensaje) {
-                //SE CREA UNA VARIABLE LA CUAL TRAERA EN TEXTO HTML LOS RESULTADOS QUE ARROJE EL ARCHIVO AL CUAL SE LE ENVIO LA INFORMACION "control_articulo.php"
+                //SE CREA UNA VARIABLE LA CUAL TRAERA EN TEXTO HTML LOS RESULTADOS QUE ARROJE EL ARCHIVO AL CUAL SE LE ENVIO LA INFORMACION "control_asociados.php"
                 $("#resultado_insert").html(mensaje);
             }); 
         }//FIN else CONDICIONES
@@ -154,7 +154,7 @@
           </div>
         </form>
         <!-- BOTON QUE MANDA LLAMAR EL SCRIPT PARA QUE EL SCRIPT HAGA LO QUE LA FUNCION CONTENGA -->
-        <a onclick="insert_articulo();" class="waves-effect waves-light btn pink right"><i class="material-icons right">add</i>Agregar</a>
+        <a onclick="insert_asociado();" class="waves-effect waves-light btn green right"><i class="material-icons right">send</i>ENVIAR</a>
       </div> 
     </div><br>
   </body>

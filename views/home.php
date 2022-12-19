@@ -26,7 +26,7 @@
 
 
 	<div class="fixed-action-btn">
-	  <a href="new_asociado.php" class="waves-effect waves-light btn-large"><i class="material-icons left">mood</i>Quiero Ser Asociado <i class="material-icons right">add</i></a>
+	  <a href="new_asociado.php" class="waves-effect waves-light btn-large orange"><i class="material-icons left">mood</i>Quiero Ser Asociado <i class="material-icons right">add</i></a>
 	</div>
 
 
