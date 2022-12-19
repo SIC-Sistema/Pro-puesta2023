@@ -48,6 +48,8 @@ switch ($Accion) {
 		    } else {
 		        echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
 		    }
+		}else if ($tipo == 'Especie') {
+			// code...
 		}
         break;
     case 1:///////////////           IMPORTANTE               ///////////////

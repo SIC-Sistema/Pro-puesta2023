@@ -111,7 +111,7 @@
               <input id="telefono_asociado" type="text" class="validate" data-length="30" required>
               <label for="telefono_asociado">*Telefono:</label>
             </div> 
-            <br><h5 id="content" style="display: none;">Al elegir en esepecie se registrara tu empersa como proveedor</h5>   
+            <br><h5 id="content" style="display: none;">Al elegir en esepecie se registrara tu empersa o negocio como proveedor</h5>   
 
             <div class="input-field" id="content2" style="display: none;">
               <i class="material-icons prefix">people</i>
