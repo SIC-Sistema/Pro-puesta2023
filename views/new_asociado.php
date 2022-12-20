@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>SIC | Nuevo Asociado</title>
+    <title>Pro-puesta2023 | Nuevo Asociado</title>
     <?php 
     //INCLUIMOS EL ARCHIVO QUE CONTIENE LA BARRA DE NAVEGACION TAMBIEN TIENE (scripts, conexion, modals)
     include('nav.php');

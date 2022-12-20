@@ -5,7 +5,7 @@
   include('nav.php');
   $datos = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `recaudaciones` LIMIT 1"));
 ?>
-<title>SIC | Inicio</title>
+<title>Pro-puesta2023 | Inicio</title>
 </head>
 <main>
 <body>
