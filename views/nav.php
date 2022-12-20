@@ -28,11 +28,10 @@ $Hoy = date('Y-m-d');
 			</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a class='dropdown-button red-text' href="home.php#Recaudado-1"><i class="material-icons left">monetization_on</i><b>Recaudado</b> </a></li>
-				
 				<li><a class='dropdown-button amber-text' href="home.php#Conocenos-2"><i class="material-icons left">accessibility</i><b>Conocenos</b></a></li>
-				
  				<li><a class='dropdown-button green-text' href="home.php#Contacto-3"><i class="material-icons left">account_box</i><b>Contacto</b> </a></li> 				
- 				<li><a class='dropdown-button grey-text text-darken-3' href="new_asociado.php"><i class="material-icons left">add</i><b>Asociados</b> </a></li> 		
+ 				<li><a class='dropdown-button grey-text text-darken-3' href="new_asociado.php"><i class="material-icons left">add</i><b>Asociados</b> </a></li>
+				<li><a class='dropdown-button light-blue-text text-darken-3' href="new_beneficiario.php"><i class="material-icons left">group_add</i><b>Nuevo Beneficiario</b> </a></li> 		
 			</ul>			
 		</div>		
 	</nav>
@@ -48,7 +47,9 @@ $Hoy = date('Y-m-d');
 
 		<li><a class='dropdown-button indigo-text' href="home.php#Contacto-3"><i class="material-icons left">account_box</i><b>Contacto</b> </a></li> 	
 
- 		<li><a class='dropdown-button indigo-text' href="new_asociado.php"><i class="material-icons left">add</i><b>Asociados</b> </a></li> 				
+ 		<li><a class='dropdown-button indigo-text' href="new_asociado.php"><i class="material-icons left">add</i><b>Asociados</b> </a></li>
+
+		<li><a class='dropdown-button indigo-text' href="new_beneficiario.php"><i class="material-icons left">group_add</i><b>Nuevo Beneficiario</b> </a></li>		
 	</ul>
 	<?php 
 	include('../views/modals.php');
