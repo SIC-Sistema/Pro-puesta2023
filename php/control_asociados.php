@@ -8,14 +8,14 @@ include('../php/conexion.php');
 date_default_timezone_set('America/Mexico_City');
 $Fecha_hoy = date('Y-m-d');// FECHA ACTUAL
 
-//CON POST TOMAMOS UN VALOR DEL 0 AL 4 PARA VER QUE ACCION HACER (Insertar = 0, Actualizar Info = 1, Actualizar Est = 2, Borrar = 3, Permisos = 4)
+//CON POST TOMAMOS UN VALOR DEL 0 AL 4 PARA VER QUE ACCION HACER (Insertar = 0, consulta1 = 1, consulta2 = 2, cambio entrego = 3)
 $Accion = $conn->real_escape_string($_POST['accion']);
 if ($Accion != 0) {
 	//ARCHIVO QUE CONDICIONA QUE TENGAMOS ACCESO A ESTE ARCHIVO SOLO SI HAY SESSION INICIADA Y NOS PREMITE TIMAR LA INFORMACION DE ESTA
 	include('is_logged.php');
 	$id_user = $_SESSION['user_id'];// ID DEL USUARIO LOGEADO
 }
-//UN SWITCH EL CUAL DECIDIRA QUE ACCION REALIZA DEL CRUD (Insertar = 0, Actualizar Info = 1, Actualizar Est = 2, Borrar = 3, Permisos = 4)
+//UN SWITCH EL CUAL DECIDIRA QUE ACCION REALIZA DEL CRUD (Insertar = 0, consulta1 = 1, consulta2 = 2, cambio entrego = 3)
 switch ($Accion) {
     case 0:  ///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 0 realiza:
@@ -86,116 +86,111 @@ switch ($Accion) {
 		    }
 		}
         break;
-    case 1:///////////////           IMPORTANTE               ///////////////
+   	case 1:  ///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 1 realiza:
 
-		$user_id = $conn->real_escape_string($_POST['valorId']);//VALOR DEL USUARIO A EDITAR POR POST "perfil_user.php"
+        //CON POST RECIBIMOS UN TEXTO DEL BUSCADOR VACIO O NO de "asociados.php"
+        $Texto = $conn->real_escape_string($_POST['texto']);
+        //VERIFICAMOS SI CONTIENE ALGO DE TEXTO LA VARIABLE
+		if ($Texto != "") {
+			//MOSTRARA LOS asociados QUE SE ESTAN BUSCANDO Y GUARDAMOS LA CONSULTA SQL EN UNA VARIABLE $sql......
+			$sql = "SELECT * FROM `asociados` WHERE estatus = 1 AND (nombre LIKE '%$Texto%' OR id = '$Texto' OR tipo LIKE '$Texto%' OR telefono LIKE '$Texto%') ORDER BY id";	
+		}else{//ESTA CONSULTA SE HARA SIEMPRE QUE NO ALLA NADA EN EL BUSCADOR Y GUARDAMOS LA CONSULTA SQL EN UNA VARIABLE $sql...
+			$sql = "SELECT * FROM `asociados` WHERE estatus = 1 ORDER BY id";
+		}//FIN else $Texto VACIO O NO
 
-		//REALIZAMOS LA CONSULTA PARA SACAR LA INFORMACION DEL USUARIO Y ASIGNAMOS EL ARRAY A UNA VARIABLE $area
-		$area = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM users WHERE user_id=$id_user"));
+        // REALIZAMOS LA CONSULTA A LA BASE DE DATOS MYSQL Y GUARDAMOS EN FORMARTO ARRAY EN UNA VARIABLE $consulta
+		$consulta = mysqli_query($conn, $sql);		
+		$contenido = '';//CREAMOS UNA VARIABLE VACIA PARA IR LLENANDO CON LA INFORMACION EN FORMATO
 
-		if($area['area'] == "Administrador" OR $user_id == $id_user){
-			//CON POST RECIBIMOS TODAS LAS VARIABLES DEL FORMULARIO POR EL SCRIPT "perfil_user.php" QUE NESECITAMOS PARA ACTUALIZAR
-			$Nombres = $conn->real_escape_string($_POST['valorNombres']);
-			$Apellidos = $conn->real_escape_string($_POST['valorApellidos']);
-			$Usuario = $conn->real_escape_string($_POST['valorUsuario']);
-			$Email = $conn->real_escape_string($_POST['valorEmail']);
-			//CREAMOS LA SENTENCIA SQL PARA HACER LA ACTUALIZACION DE LA INFORMACION DEL USUARIO Y LA GUARDAMOS EN UNA VARIABLE
-			$sql = "UPDATE users SET firstname='$Nombres', lastname='$Apellidos', user_name='$Usuario', user_email = '$Email' WHERE user_id='$user_id'";
-			//VERIFICAMOS QUE SE EJECUTE LA SENTENCIA EN MYSQL 
-			if(mysqli_query($conn, $sql)){
-				echo '<script>M.toast({html:"El perfil se actualizó correctamente.", classes: "rounded"})</script>';
-				echo '<script>recargar_usuarios()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
-			}else{
-				echo '<script>M.toast({html:"Ha ocurrido un error.", classes: "rounded"})</script>';	
-			}
-		}else{
-		  echo "<script >M.toast({html: 'Sólo un administrador o el mismo usuario puede editar un perfil.', classes: 'rounded'});</script>";
-		}
+		//VERIFICAMOS QUE LA VARIABLE SI CONTENGA INFORMACION
+		if (mysqli_num_rows($consulta) == 0) {
+			echo '<script>M.toast({html:"No se encontraron asociados.", classes: "rounded"})</script>';
+        } else {
+            //SI NO ESTA EN == 0 SI TIENE INFORMACION
+            //RECORREMOS UNO A UNO LOS asociados CON EL WHILE
+            while($asociado = mysqli_fetch_array($consulta)) {
+				//Output
+				$estatus = ($asociado['estatus'] == 1)? '<b class = "red-text">Sin Entregar</b>':'<b class = "green-text">Entregado</b>';
+                $contenido .= '			
+		          <tr>
+		            <td>'.$asociado['id'].'</td>
+		            <td>'.$asociado['nombre'].'</td>
+		            <td>'.$asociado['telefono'].'</td>
+		            <td>En '.$asociado['tipo'].'</td>
+		            <td>'.$asociado['fecha'].'</td>
+		            <td>$'.sprintf('%.2f', $asociado['cantidad']).'</td>
+		            <td>'.$estatus.'</td>
+		            <td><a onclick="entrego('.$asociado['id'].')" class="btn btn-floating green waves-effect waves-light"><i class="material-icons">arrow_forward</i></a></td>
+		          </tr>';
+
+			}//FIN while
+        }//FIN else
+
+        echo $contenido;// MOSTRAMOS LA INFORMACION HTML
+
         break;
     case 2:///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 2 realiza:
 
-    	//CON POST RECIBIMOS TODAS LAS VARIABLES DEL FORMULARIO POR EL SCRIPT "usuarios.php" QUE NESECITAMOS PARA ACTUALIZAR
-    	$valorId = $conn->real_escape_string($_POST["valorId"]);
-		$valorEstatus = $conn->real_escape_string($_POST["valorEstatus"]);
+    	//CON POST RECIBIMOS UN TEXTO DEL BUSCADOR VACIO O NO de "asociados.php"
+        $Texto = $conn->real_escape_string($_POST['texto']);
+        //VERIFICAMOS SI CONTIENE ALGO DE TEXTO LA VARIABLE
+		if ($Texto != "") {
+			//MOSTRARA LOS asociados QUE SE ESTAN BUSCANDO Y GUARDAMOS LA CONSULTA SQL EN UNA VARIABLE $sql......
+			$sql = "SELECT * FROM `asociados` WHERE estatus = 2 AND (nombre LIKE '%$Texto%' OR id = '$Texto' OR tipo LIKE '$Texto%' OR telefono LIKE '$Texto%') ORDER BY id";	
+		}else{//ESTA CONSULTA SE HARA SIEMPRE QUE NO ALLA NADA EN EL BUSCADOR Y GUARDAMOS LA CONSULTA SQL EN UNA VARIABLE $sql...
+			$sql = "SELECT * FROM `asociados` WHERE estatus = 2 ORDER BY id";
+		}//FIN else $Texto VACIO O NO
 
-		//CREAMOS LA SENTENCIA SQL PARA ACTUALIZAR
-		$sql= "UPDATE users SET estatus = '$valorEstatus' WHERE user_id = '$valorId'";
-		//VERIIFCAMOS QUE SE HAYA REALIZADO LA SENTENCIA EN LA BASE DE DATOS
-		if(mysqli_query($conn, $sql)){
-		    echo '<script>M.toast({html:"Usuario actualizado..", classes: "rounded"})</script>';
-			echo '<script>recargar_usuarios()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
-		}else{
-		    echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
-		}
+        // REALIZAMOS LA CONSULTA A LA BASE DE DATOS MYSQL Y GUARDAMOS EN FORMARTO ARRAY EN UNA VARIABLE $consulta
+		$consulta = mysqli_query($conn, $sql);		
+		$contenido = '';//CREAMOS UNA VARIABLE VACIA PARA IR LLENANDO CON LA INFORMACION EN FORMATO
+
+		//VERIFICAMOS QUE LA VARIABLE SI CONTENGA INFORMACION
+		if (mysqli_num_rows($consulta) == 0) {
+			echo '<script>M.toast({html:"No se encontraron asociados.", classes: "rounded"})</script>';
+        } else {
+            //SI NO ESTA EN == 0 SI TIENE INFORMACION
+            //RECORREMOS UNO A UNO LOS asociados CON EL WHILE
+            while($asociado = mysqli_fetch_array($consulta)) {
+				//Output
+				$estatus = ($asociado['estatus'] == 1)? '<b class = "red-text">Sin Entregar</b>':'<b class = "green-text">Entregado</b>';
+                $contenido .= '			
+		          <tr>
+		            <td>'.$asociado['id'].'</td>
+		            <td>'.$asociado['nombre'].'</td>
+		            <td>'.$asociado['telefono'].'</td>
+		            <td>En '.$asociado['tipo'].'</td>
+		            <td>'.$asociado['fecha'].'</td>
+		            <td>$'.sprintf('%.2f', $asociado['cantidad']).'</td>
+		            <td>'.$estatus.'</td>
+		          </tr>';
+
+			}//FIN while
+        }//FIN else
+
+        echo $contenido;// MOSTRAMOS LA INFORMACION HTML
         break;
     case 3:///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 3 realiza:
 
     	//CON POST RECIBIMOS LA VARIABLE DEL BOTON POR EL SCRIPT DE "usuarios.php" QUE NESECITAMOS PARA BORRAR
-    	$valorId = $conn->real_escape_string($_POST["valorId"]);
+    	$id = $conn->real_escape_string($_POST["id"]);
+  		$asociado = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `asociados` WHERE id = $id"));
 
-		#VERIFICAMOS QUE SE BORRE CORRECTAMENTE EL USUARIO DE `users`
-		if(mysqli_query($conn, "DELETE FROM users WHERE user_id=$valorId")){
-			#SI ES ELIMINADO MANDAR MSJ CON ALERTA
-		    echo '<script>M.toast({html:"Usuario eliminado.", classes: "rounded"})</script>';
-			echo '<script>recargar_usuarios()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
+		if(mysqli_query($conn, "UPDATE `asociados` SET estatus = 2 WHERE id = $id")){
+			#CREAR TICKET
+			#SUMAR A LA CANTIDAD
+			$cantidad = $asociado['cantidad'];
+			$sql_efectivo = "UPDATE `recaudaciones` SET efectivo = efectivo+$cantidad WHERE id_recaudacion = 1";
+		    mysqli_query($conn,$sql_efectivo);
+		    echo '<script>M.toast({html:"Estatus Cambiado.", classes: "rounded"})</script>';
+			echo '<script>recargar_asociados()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
 		}else{
 			#SI NO ES BORRADO MANDAR UN MSJ CON ALERTA
 		    echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
 		}
         break;
-	case 4:///////////////           IMPORTANTE               ///////////////
-    	//$Accion es gual a 4 relizar:
-
-    	//CON POST RECIBIMOS TODAS LAS VARIABLES DEL FORMULARIO POR EL SCRIPT "permisos.php" QUE NESECITAMOS PARA CAMBIARLOS
-    	$id = $conn->real_escape_string($_POST["id"]);
-    	$Banco = $conn->real_escape_string($_POST["Banco"]);
-    	$Credito = $conn->real_escape_string($_POST["Credito"]);
-    	$BorrarPagos = $conn->real_escape_string($_POST["BorrarPagos"]);
-    	$BorrarClientes = $conn->real_escape_string($_POST["BorrarClientes"]);
-    	$BorrarVentas = $conn->real_escape_string($_POST["BorrarVentas"]);
-		$BorrarAlmacenes = $conn->real_escape_string($_POST["BorrarAlmacenes"]);
-    	$Ventas = $conn->real_escape_string($_POST["Ventas"]);
-    	$Compras = $conn->real_escape_string($_POST["Compras"]);
-    	$Articulos = $conn->real_escape_string($_POST["Articulos"]);
-		$Almacen = $conn->real_escape_string($_POST["valorAlmacen"]);
-    	//CREAMOS LA SENTENCIA SQL PARA HACER LA ACTUALIZACION DE LOS PERMISOS DEL USUARIO Y LA GUARDAMOS EN UNA VARIABLE
-		$sql = "UPDATE users SET banco='$Banco', credito='$Credito', b_pagos='$BorrarPagos', b_clientes = '$BorrarClientes', b_ventas = '$BorrarVentas', ventas = '$Ventas', compras = '$Compras',  b_articulos = '$Articulos', b_almacenes = '$BorrarAlmacenes', almacen = '$Almacen' WHERE user_id='$id'";
-		//VERIFICAMOS QUE SE EJECUTE LA SENTENCIA EN MYSQL 
-		if(mysqli_query($conn, $sql)){
-			echo '<script>M.toast({html:"Permisos actualizados correctamente.", classes: "rounded"})</script>';
-			echo '<script>recargar_usuarios()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
-		}else{
-			echo '<script>M.toast({html:"Ha ocurrido un error.", classes: "rounded"})</script>';	
-		}
-    	break;
-    case 5:///////////////           IMPORTANTE               ///////////////
-    	// $Accion es igual a 5 realiza:
-
-    	//CON POST RECIBIMOS TODAS LAS VARIABLES DEL FORMULARIO POR EL SCRIPT "perfil_user.php" QUE NESECITAMOS PARA ACTUALIZAR
-    	$id_user = $conn->real_escape_string($_POST["valorId"]);
-		$Password_new = $conn->real_escape_string($_POST["valorContra"]);
-		$Password_old = $conn->real_escape_string($_POST["valorContraAnterior"]);
-
-		$user=mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$id_user'"));
-
-		if (password_verify($Password_old, $user['user_password_hash'])) {
-			$Password_new_hash = password_hash($Password_new, PASSWORD_DEFAULT);
-			//CREAMOS LA SENTENCIA SQL PARA ACTUALIZAR
-			$sql= "UPDATE users SET user_password_hash = '$Password_new_hash' WHERE user_id = '$id_user'";
-			//VERIIFCAMOS QUE SE HAYA REALIZADO LA SENTENCIA EN LA BASE DE DATOS
-			if(mysqli_query($conn, $sql)){
-			    echo '<script>M.toast({html:"Usuario actualizado (Contraseña)..", classes: "rounded"})</script>';
-				echo '<script>cerrar_sesion()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
-			}else{
-			    echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
-			}
-		}else{
-			#SI LAS CONTRASEÑA ANTERIOR NO ES IGUAL MANDA UN MSJ CON ALERTA
-		    echo '<script>M.toast({html:"La contraseña anterior no coincide.", classes: "rounded"})</script>';
-		}
-    	break;
 }// FIN switch
 mysqli_close($conn);

@@ -29,10 +29,8 @@ $Hoy = date('Y-m-d');
 				<i class="material-icons">menu</i>
 			</a>
 			<ul class="right hide-on-med-and-down">
-				<li><a class='dropdown-button indigo-text' data-target='dropdown1'><i class="material-icons left">library_books</i><b>Asociados</b> <i class="material-icons right">arrow_drop_down</i></a></li>
-				<ul id='dropdown1' class='dropdown-content'>
-					<li><a href = "proveedores_punto_venta.php" class="indigo-text"><i class="material-icons">person_pin</i>Proveedores </a></li>  			 
- 				 </ul>
+				<li><a class='indigo-text' href="asociados.php"><i class="material-icons left">person</i><b>Asociados</b></a></li>
+				
 				<li><a class='dropdown-button indigo-text' data-target='dropdown2'><i class="material-icons left">library_add</i><b>Proveedores</b><span class=" new badge pink" data-badge-caption="">7</span><i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown2' class='dropdown-content'>
 					<li><a href = "almacenes_punto_venta.php" class="indigo-text"><i class="material-icons">assignment_turned_in</i>Almacenes</a></li>
