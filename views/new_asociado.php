@@ -130,7 +130,7 @@
             <div class="input-field">
               <i class="material-icons prefix">monetization_on</i>
               <input id="cantidad_asociado" type="number" class="validate" data-length="30" required>
-              <label for="cantidad_asociado">*Cantidad:</label>
+              <label for="cantidad_asociado">*Cantidad a aportar:</label>
             </div>  
             <div class="input-field">
               <p class="col s6">
