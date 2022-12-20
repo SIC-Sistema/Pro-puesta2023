@@ -25,7 +25,8 @@
 
 			      <h6 class="blue-text"><b>1.- Pasar a dejar el efectivo a la direccion Av. XXXXXX.</b></h6>
 			      <h6 class="blue-text"><b>2.- O transferir a la cuenta 000000000 y enviar el comprobante al Whatsapp 000000.</b></h6>
-			      <h6 class="blue-text"><b>3.- Una vez confirmado su donativo se le entregara o se le enviara via Whatsapp un ticket como comprobante.</b></h6>			      
+			      <h6 class="blue-text"><b>3.- Una vez confirmado su aportación se le entregara o se le enviara via Whatsapp un ticket como comprobante.</b></h6>		
+			      <h6 class="blue-text"><b>3.- Una vez confirmado su aportación y enviado el comprobante la cantidad total se vera reflejada rn la pagina sumandose al total recaudado.</b></h6>			      
 			      
 			      <a href="home.php" class="modal-action modal-close waves-effect waves-green btn-large green right">Aceptar<i class="material-icons left">done</i></a>
 			    </div>

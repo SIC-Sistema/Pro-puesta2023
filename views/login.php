@@ -19,7 +19,7 @@ $login = new Login();
 // Preguntamos si estamos accediendo
 if ($login->isUserLoggedIn() == true){
    //Si se ha iniciado la sesión, entonces nos dirigimos a la página...
-   header("location: ../views/home.php");
+   header("location: ../views/admin.php");
 
 } else {
     // Y si no se ha iniciado sesión, entonces...
@@ -33,7 +33,7 @@ if ($login->isUserLoggedIn() == true){
 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>SIC | Iniciar Sesión</title>
+  <title>Pro-puesta2023 | Iniciar Sesión</title>
   <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <!-- CSS  -->
@@ -82,7 +82,6 @@ if ($login->isUserLoggedIn() == true){
           		<i class="bi bi-eye-slash prefix right" id="togglePassword"></i>
                 <br><br>
                 <button type="submit" class="btn waves-effect waves-light pink" name="login" id="submit">Iniciar Sesión</button>
-                <a href = "form_usuario.php" class="btn waves-effect waves-light pink col s12">Registrarse</a>
             </form>            
         </div><!-- /card-contenerdor -->
     </div><!-- /contenedor -->

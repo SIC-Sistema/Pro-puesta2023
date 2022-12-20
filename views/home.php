@@ -12,7 +12,7 @@
 	<div class="row container" name="Recaudado-1">
 		<a name="Recaudado-1"></a>
 		<div class="row center"><br><br>
-			<img align="center" src="../img/LogoSIC.png">
+			<img align="center" src="../img/Logo.png">
 			<br><h4 class="red-text text-darken-1">RECAUDACIONES TOTALES</h4><br><br>
 			<div class="col s6 rigth">
 				<h1 class="green-text courier"><b>$<?php echo sprintf('%.2f', $datos['efectivo']); ?></b></h1>

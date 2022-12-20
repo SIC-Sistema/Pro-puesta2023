@@ -66,11 +66,17 @@ switch ($Accion) {
 				$valorCorreo = str_replace($caracteres_malos, $caracteres_buenos, $valorCorreo);
 		    	$sql_p = "INSERT INTO `proveedores` (nombre, direccion, correo, cuenta,  fecha)
 		            VALUES ('$valorNombreEmp','$valorDireccion','$valorCorreo', '$cuenta', '$Fecha_hoy')";
-		        mysqli_query($conn,$sql_p)
+		        mysqli_query($conn,$sql_p);
+		        $ultimo =  mysqli_fetch_array(mysqli_query($conn, "SELECT MAX(id) AS id FROM `proveedores` WHERE correo = '$valorCorreo' AND fecha = '$Fecha_hoy'"));            
+        		$id = $ultimo['id'];
 		         ?>
                 <script>
                     M.toast({html:"Asociado y proveedor agregado exitosamente", classes: "rounded"});
-                    setTimeout("location.href='detalles_proceso.php?tipo=Especie'", 800);
+                    setTimeout("location.href='home.php'", 800);
+                    var a = document.createElement("a");
+	                    a.target = "_blank";
+	                    a.href = "../php/comprobante_especie.php?id="+<?php echo $id; ?>;
+	                    a.click();
                 </script>
                 <?php
 		    } else {
