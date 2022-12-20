@@ -1,4 +1,10 @@
 <?php
+#INCLUIMOS TODAS LAS LIBRERIAS  DE MAILER PARA PODER ENVIAR CORREOS DE ESTE ARCHIVO
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer/vendor/autoload.php';
 #INCLUIMOS EL ARCHIVO CON LA CONEXION A LA BASE DE DATPS
     include('../php/conexion.php');
     #INCLUIMOS EL ARCHIVO CON LAS LIBRERIAS DE FPDF PARA PODER CREAR ARCHIVOS CON FORMATO PDF
@@ -115,4 +121,32 @@ class PDF extends FPDF{
 
 
     $pdf->Output('COMPROBANTE','I');
+    $doc = $pdf->Output('COMPROBANTE','S');
+
+    $Aviso = 'Buen dia, le adjuntamos su comprobante por su aportacion GRACIAS!';
+      #AVISO
+      if ($Aviso != '') {
+          $correo = new PHPMailer(true);
+          try{
+              #$correo->SMTPDebug = SMTP::DEBUG_SERVER;
+              $correo->isSMTP();
+              $correo->Host = 'sicsom.com';
+              $correo->SMTPAuth = true;
+              $correo->Username = 'cortes@sicsom.com';
+              $correo->Password = '3.NiOYNE(Txj';
+              $correo->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+              $correo->Port = 465;
+              #COLOCAMOS UN TITULO AL CORREO  COMO REMITENTE
+              $correo->setFrom('pro-puesta2023@hotmail.com', 'PRO-PUESTA 2023');
+              #DEFINIMOS A QUE CORREOS SERAN LOS DESTINATARIOS
+              $correo->addAddress($proveedor['correo'], $proveedor['nombre']);   
+              $correo->Subject = 'Comprobante PRO-PUESTA 2023';// SE CREA EL ASUNTO DEL CORREO
+              $correo->Body = $Aviso;
+              $correo->AddStringAttachment($doc, 'comprobante.pdf', 'base64', 'application/pdf');
+              $correo->send();
+              echo "CORREO ENVIADO CON EXITO !!!";
+          }catch(Exception $e){
+              echo 'ERROR: '.$correo->ErrorInfo;
+          }
+    }
 ?>

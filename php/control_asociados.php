@@ -69,6 +69,8 @@ switch ($Accion) {
 		        mysqli_query($conn,$sql_p);
 		        $ultimo =  mysqli_fetch_array(mysqli_query($conn, "SELECT MAX(id) AS id FROM `proveedores` WHERE correo = '$valorCorreo' AND fecha = '$Fecha_hoy'"));            
         		$id = $ultimo['id'];
+        		$sql_vales = "UPDATE `recaudaciones` SET vales = vales+$valorCantidad WHERE id_recaudacion = 1";
+		        mysqli_query($conn,$sql_vales);
 		         ?>
                 <script>
                     M.toast({html:"Asociado y proveedor agregado exitosamente", classes: "rounded"});
