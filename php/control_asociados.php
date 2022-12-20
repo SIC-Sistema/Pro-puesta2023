@@ -49,7 +49,33 @@ switch ($Accion) {
 		        echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
 		    }
 		}else if ($tipo == 'Especie') {
-			// code...
+			$sql = "INSERT INTO `asociados` (nombre, telefono, cantidad, tipo, estatus, fecha)
+		            VALUES ('$valorNombreAsociado','$valorTelefono','$valorCantidad', '$tipo', 2,'$Fecha_hoy')";
+		    // Si el usuario fue añadido con éxito
+		    if (mysqli_query($conn,$sql)) {
+		    	//creamos el proveedor con saldo - 
+		    	$cuenta = -1*$valorCantidad;
+		    	$valorNombreEmp = $conn->real_escape_string($_POST["valorNombreEmp"]);
+				$valorDireccion = $conn->real_escape_string($_POST["valorDireccion"]);
+				$valorCorreo = $conn->real_escape_string($_POST["valorCorreo"]);
+				$tipo = $conn->real_escape_string($_POST["tipo"]);
+
+				//ELIMINAR CODIGO PHP
+				$valorNombreEmp = str_replace($caracteres_malos, $caracteres_buenos, $valorNombreEmp);
+				$valorDireccion = str_replace($caracteres_malos, $caracteres_buenos, $valorDireccion);
+				$valorCorreo = str_replace($caracteres_malos, $caracteres_buenos, $valorCorreo);
+		    	$sql_p = "INSERT INTO `proveedores` (nombre, direccion, correo, cuenta,  fecha)
+		            VALUES ('$valorNombreEmp','$valorDireccion','$valorCorreo', '$cuenta', '$Fecha_hoy')";
+		        mysqli_query($conn,$sql_p)
+		         ?>
+                <script>
+                    M.toast({html:"Asociado y proveedor agregado exitosamente", classes: "rounded"});
+                    setTimeout("location.href='detalles_proceso.php?tipo=Especie'", 800);
+                </script>
+                <?php
+		    } else {
+		        echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
+		    }
 		}
         break;
     case 1:///////////////           IMPORTANTE               ///////////////
