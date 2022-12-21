@@ -34,6 +34,7 @@ $Hoy = date('Y-m-d');
 				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown2'><i class="material-icons left">local_grocery_store</i><b>Proveedores</b><i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown2' class='dropdown-content'>
 					<li><a href = "new_proveedor.php" class="light-blue-text text-darken-3"><i class="material-icons">add</i>Nuevo Proveedor</a></li>
+					<li><a href = "list_proveedores.php" class="light-blue-text text-darken-3"><i class="material-icons">list</i>Lista Proveedores</a></li>
  				</ul>
  				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown5'><i class="material-icons left">accessibility</i><b>Beneficiados</b> <i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown5' class='dropdown-content'>   
@@ -74,6 +75,7 @@ $Hoy = date('Y-m-d');
 		      			<span>
 		      			  <ul>
 							<li><a href = "new_proveedor.php"><i class="material-icons">add</i>Nuevo Proveedor</a></li>
+							<li><a href = "list_proveedores.php"><i class="material-icons">list</i>Lista Proveedores</a></li>
 					      </ul>
 					    </span>
 		      		</div>    			

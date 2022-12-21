@@ -6,6 +6,11 @@
             include('fredyNav.php');
         ?>
         <script>
+            //FUNCION QUE AL USAR VALIDA LA VARIABLE QUE LLEVE UN FORMATO DE CORREO 
+              function validar_email( email )   {
+                var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                return regex.test(email) ? true : false;
+              };
             //FUNCION QUE HACE LA INSERCION DEL ASOCIADO
             function insert_proveedor() {
 
@@ -21,6 +26,8 @@
                     M.toast({html: 'El campo Dirección se encuentra vacío.', classes: 'rounded'});
                 }else if (textoCorreoPro == "") {
                     M.toast({html: 'El campo Correo se encuentra vacío.', classes: 'rounded'});
+                }else if (!validar_email(textoCorreoPro)) {
+                    M.toast({html:"Por favor ingrese un Email correcto.", classes: "rounded"});
                 }else {
                     //SI LOS IF NO SE CUMPLEN QUIERE DECIR QUE LA INFORMACION CUENTA CON TODO LO REQUERIDO
                     //MEDIANTE EL METODO POST ENVIAMOS UN ARRAY CON LA INFORMACION AL ARCHIVO EN LA DIRECCION "../php/control_proveedores.php"

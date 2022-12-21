@@ -9,10 +9,10 @@ date_default_timezone_set('America/Mexico_City');
 $Fecha_hoy = date('Y-m-d');// FECHA ACTUAL
 $id_user = $_SESSION['user_id'];// ID DEL USUARIO LOGEADO
 
-//CON POST TOMAMOS UN VALOR DEL 0 AL 4 PARA VER QUE ACCION HACER (Insertar = 0, Actualizar Info = 1, Actualizar Est = 2, Borrar = 3, Permisos = 4)
+//CON POST TOMAMOS UN VALOR DEL 0 AL 4 PARA VER QUE ACCION HACER (Insertar = 0, consulta = 1, Actualizar = 2, Borrar = 3, Permisos = 4)
 $Accion = $conn->real_escape_string($_POST['accion']);
 
-//UN SWITCH EL CUAL DECIDIRA QUE ACCION REALIZA DEL CRUD (Insertar = 0, Actualizar Info = 1, Actualizar Est = 2, Borrar = 3, Permisos = 4)
+//UN SWITCH EL CUAL DECIDIRA QUE ACCION REALIZA DEL CRUD (Insertar = 0, consulta = 1, Actualizar = 2, Borrar = 3, Permisos = 4)
 switch ($Accion) {
     case 0:  ///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 0 realiza: 
@@ -31,7 +31,7 @@ switch ($Accion) {
 			    ?>
 	            <script>
 	                M.toast({html:"Proveedor agregado exitosamente", classes: "rounded"});
-	                setTimeout("location.href='../views/new_proveedor.php'", 800);
+	                setTimeout("location.href='../views/list_proveedores.php'", 800);
 	            </script>
 	            <?php
 			} else {
@@ -42,43 +42,65 @@ switch ($Accion) {
     case 1:///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 1 realiza:
 
-		$user_id = $conn->real_escape_string($_POST['valorId']);//VALOR DEL USUARIO A EDITAR POR POST "perfil_user.php"
+        //CON POST RECIBIMOS UN TEXTO DEL BUSCADOR VACIO O NO de "list_proveedores.php"
+        $Texto = $conn->real_escape_string($_POST['texto']);
+        //VERIFICAMOS SI CONTIENE ALGO DE TEXTO LA VARIABLE
+		if ($Texto != "") {
+			//MOSTRARA LOS proveedores QUE SE ESTAN BUSCANDO Y GUARDAMOS LA CONSULTA SQL EN UNA VARIABLE $sql......
+			$sql = "SELECT * FROM `proveedores` WHERE (nombre LIKE '%$Texto%' OR id = '$Texto' OR correo LIKE '%$Texto%') ORDER BY id";	
+		}else{//ESTA CONSULTA SE HARA SIEMPRE QUE NO ALLA NADA EN EL BUSCADOR Y GUARDAMOS LA CONSULTA SQL EN UNA VARIABLE $sql...
+			$sql = "SELECT * FROM `proveedores` ORDER BY id";
+		}//FIN else $Texto VACIO O NO
 
-		//REALIZAMOS LA CONSULTA PARA SACAR LA INFORMACION DEL USUARIO Y ASIGNAMOS EL ARRAY A UNA VARIABLE $area
-		$area = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM users WHERE user_id=$id_user"));
+        // REALIZAMOS LA CONSULTA A LA BASE DE DATOS MYSQL Y GUARDAMOS EN FORMARTO ARRAY EN UNA VARIABLE $consulta
+		$consulta = mysqli_query($conn, $sql);		
+		$contenido = '';//CREAMOS UNA VARIABLE VACIA PARA IR LLENANDO CON LA INFORMACION EN FORMATO
 
-		if($area['area'] == "Administrador" OR $user_id == $id_user){
-			//CON POST RECIBIMOS TODAS LAS VARIABLES DEL FORMULARIO POR EL SCRIPT "perfil_user.php" QUE NESECITAMOS PARA ACTUALIZAR
-			$Nombres = $conn->real_escape_string($_POST['valorNombres']);
-			$Apellidos = $conn->real_escape_string($_POST['valorApellidos']);
-			$Usuario = $conn->real_escape_string($_POST['valorUsuario']);
-			$Email = $conn->real_escape_string($_POST['valorEmail']);
-			//CREAMOS LA SENTENCIA SQL PARA HACER LA ACTUALIZACION DE LA INFORMACION DEL USUARIO Y LA GUARDAMOS EN UNA VARIABLE
-			$sql = "UPDATE users SET firstname='$Nombres', lastname='$Apellidos', user_name='$Usuario', user_email = '$Email' WHERE user_id='$user_id'";
-			//VERIFICAMOS QUE SE EJECUTE LA SENTENCIA EN MYSQL 
-			if(mysqli_query($conn, $sql)){
-				echo '<script>M.toast({html:"El perfil se actualizó correctamente.", classes: "rounded"})</script>';
-				echo '<script>recargar_usuarios()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
-			}else{
-				echo '<script>M.toast({html:"Ha ocurrido un error.", classes: "rounded"})</script>';	
-			}
-		}else{
-		  echo "<script >M.toast({html: 'Sólo un administrador o el mismo usuario puede editar un perfil.', classes: 'rounded'});</script>";
-		}
+		//VERIFICAMOS QUE LA VARIABLE SI CONTENGA INFORMACION
+		if (mysqli_num_rows($consulta) == 0) {
+			echo '<script>M.toast({html:"No se encontraron proveedores.", classes: "rounded"})</script>';
+        } else {
+            //SI NO ESTA EN == 0 SI TIENE INFORMACION
+            //RECORREMOS UNO A UNO LOS provedores CON EL WHILE
+            while($proveedor = mysqli_fetch_array($consulta)) {
+				//Output
+				$cuenta = ($proveedor['cuenta'] > 0)? '<b class = "red-text">$'.sprintf('%.2f', $proveedor['cuenta']).'</b>':'<b class = "green-text">$'.sprintf('%.2f', $proveedor['cuenta']).'</b>';
+                $contenido .= '			
+		          <tr>
+		            <td>'.$proveedor['id'].'</td>
+		            <td>'.$proveedor['nombre'].'</td>
+		            <td>'.$proveedor['direccion'].'</td>
+		            <td>'.$proveedor['correo'].'</td>
+		            <td>$'.sprintf('%.2f', $proveedor['salidas']).'</td>
+		            <td>'.$cuenta.'</td>
+		            <td>'.$proveedor['fecha'].'</td>
+		            <td><br><form method="post" action="../views/editar_proveedor.php"><input id="id" name="id" type="hidden" value="'.$proveedor['id'].'"><button class="btn-floating waves-effect waves-light green"><i class="material-icons">edit</i></button></form></td>
+		            <td><a onclick="borrar_proveedor('.$proveedor['id'].')" class="btn btn-floating red  darken-3 waves-effect waves-light"><i class="material-icons">delete</i></a></td>
+		          </tr>';
+
+			}//FIN while
+        }//FIN else
+
+        echo $contenido;// MOSTRAMOS LA INFORMACION HTML
         break;
     case 2:///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 2 realiza:
-
     	//CON POST RECIBIMOS TODAS LAS VARIABLES DEL FORMULARIO POR EL SCRIPT "usuarios.php" QUE NESECITAMOS PARA ACTUALIZAR
-    	$valorId = $conn->real_escape_string($_POST["valorId"]);
-		$valorEstatus = $conn->real_escape_string($_POST["valorEstatus"]);
+    	$id = $conn->real_escape_string($_POST["id"]);
+		$valorNombre = $conn->real_escape_string($_POST["valorNombre"]);
+		$valorDireccion = $conn->real_escape_string($_POST["valorDireccion"]);
+		$valorEmail = $conn->real_escape_string($_POST["valorEmail"]);
 
 		//CREAMOS LA SENTENCIA SQL PARA ACTUALIZAR
-		$sql= "UPDATE users SET estatus = '$valorEstatus' WHERE user_id = '$valorId'";
+		$sql= "UPDATE proveedores SET nombre = '$valorNombre', direccion = '$valorDireccion', correo = '$valorEmail' WHERE id = '$id'";
 		//VERIIFCAMOS QUE SE HAYA REALIZADO LA SENTENCIA EN LA BASE DE DATOS
 		if(mysqli_query($conn, $sql)){
-		    echo '<script>M.toast({html:"Usuario actualizado..", classes: "rounded"})</script>';
-			echo '<script>recargar_usuarios()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
+			?>
+	        <script>
+	            M.toast({html:"Proveedor actualizado", classes: "rounded"});
+	            setTimeout("location.href='../views/list_proveedores.php'", 800);
+	        </script>
+	        <?php
 		}else{
 		    echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
 		}
