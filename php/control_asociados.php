@@ -179,14 +179,22 @@ switch ($Accion) {
     	$id = $conn->real_escape_string($_POST["id"]);
   		$asociado = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `asociados` WHERE id = $id"));
 
-		if(mysqli_query($conn, "UPDATE `asociados` SET estatus = 2 WHERE id = $id")){
-			#CREAR TICKET
+		if(mysqli_query($conn, "UPDATE `asociados` SET estatus = 2 WHERE id = $id")){			
 			#SUMAR A LA CANTIDAD
 			$cantidad = $asociado['cantidad'];
 			$sql_efectivo = "UPDATE `recaudaciones` SET efectivo = efectivo+$cantidad WHERE id_recaudacion = 1";
 		    mysqli_query($conn,$sql_efectivo);
-		    echo '<script>M.toast({html:"Estatus Cambiado.", classes: "rounded"})</script>';
-			echo '<script>recargar_asociados()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
+			?>
+            <script>
+                M.toast({html:"Estatus Cambiado.", classes: "rounded"});
+                setTimeout("location.href='../views/asociados.php'", 800);
+                //CREAR TICKET /php/comprobante_efectivo.php?id=
+                var a = document.createElement("a");
+	                a.target = "_blank";
+	                a.href = "../php/comprobante_efectivo.php?id="+<?php echo $id; ?>;
+	                a.click();
+            </script>
+            <?php
 		}else{
 			#SI NO ES BORRADO MANDAR UN MSJ CON ALERTA
 		    echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
