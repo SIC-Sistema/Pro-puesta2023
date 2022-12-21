@@ -31,7 +31,7 @@ switch ($Accion) {
 			    ?>
 	            <script>
 	                M.toast({html:"Proveedor agregado exitosamente", classes: "rounded"});
-	                setTimeout("location.href='../views/proveedores.php'", 800);
+	                setTimeout("location.href='../views/new_proveedor.php'", 800);
 	            </script>
 	            <?php
 			} else {

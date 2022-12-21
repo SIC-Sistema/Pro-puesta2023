@@ -20,10 +20,10 @@
                 M.toast({html: 'El campo Nombre se encuentra vacío.', classes: 'rounded'});
                 }else if (textoTelefono == "") {
                 M.toast({html: 'El campo Telefono se encuentra vacío.', classes: 'rounded'});
-                }else if (textoCantidad == "") OR (textoCantidad == 0) {
+                }else if (textoCantidad == "" || textoCantidad == 0){
                 M.toast({html: 'El campo Cantidad se encuentra vacío.', classes: 'rounded'});
-                }else if (textoProveedor == "0") OR (textoProveedor == 0) OR (textoProveedor == ""){
-                M.toast({html: 'El campo Dirección se encuentra vacío.', classes: 'rounded'});
+                }else if (textoProveedor == "0" || textoProveedor == 0 || textoProveedor == ""){
+                M.toast({html: 'El campo Proveedor se encuentra vacío.', classes: 'rounded'});
                 }else {
                     //SI LOS IF NO SE CUMPLEN QUIERE DECIR QUE LA INFORMACION CUENTA CON TODO LO REQUERIDO
                     //MEDIANTE EL METODO POST ENVIAMOS UN ARRAY CON LA INFORMACION AL ARCHIVO EN LA DIRECCION "../php/control_asociados.php"
@@ -32,7 +32,7 @@
                         accion: 0,
                         valorNombreBeneficiario: textoNombreBeneficiario,
                         valorTelefono: textoTelefono,
-                        valorDireccion: textoDireccion,
+                        valorCantidad: textoCantidad,
                         valorProveedor: textoProveedor,
                     }, function(mensaje) {
                         //SE CREA UNA VARIABLE LA CUAL TRAERA EN TEXTO HTML LOS RESULTADOS QUE ARROJE EL ARCHIVO AL CUAL SE LE ENVIO LA INFORMACION "control_asociados.php"
