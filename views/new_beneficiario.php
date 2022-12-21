@@ -12,17 +12,17 @@
                 //PRIMERO VAMOS Y BUSCAMOS EN ESTE MISMO ARCHIVO LA INFORMCION REQUERIDA Y LA ASIGNAMOS A UNA VARIABLE
                 var textoNombreBeneficiario = $("input#nombre_beneficiario").val();
                 var textoTelefono = $("input#telefono_beneficiario").val();
-                var textoDireccion = $("input#direccion_beneficiario").val();
-                var textoAsociado = $("select#asociado").val();
+                var textoCantidad = $("input#cantidad_beneficio").val();
+                var textoProveedor = $("select#proveedor").val();
                 // CREAMOS CONDICIONES QUE SI SE CUMPLEN MANDARA MENSAJES DE ALERTA EN FORMA DE TOAST
                 //SI SE CUMPLEN LOS IF QUIERE DECIR QUE NO PASA LOS REQUISITOS MINIMOS DE LLENADO...
                 if (textoNombreBeneficiario == "") {
                 M.toast({html: 'El campo Nombre se encuentra vacío.', classes: 'rounded'});
                 }else if (textoTelefono == "") {
                 M.toast({html: 'El campo Telefono se encuentra vacío.', classes: 'rounded'});
-                }else if (textoDireccion == "") {
-                M.toast({html: 'El campo Dirección se encuentra vacío.', classes: 'rounded'});
-                }else if (textoDireccion == "") {
+                }else if (textoCantidad == "") OR (textoCantidad == 0) {
+                M.toast({html: 'El campo Cantidad se encuentra vacío.', classes: 'rounded'});
+                }else if (textoProveedor == "0") OR (textoProveedor == 0) OR (textoProveedor == ""){
                 M.toast({html: 'El campo Dirección se encuentra vacío.', classes: 'rounded'});
                 }else {
                     //SI LOS IF NO SE CUMPLEN QUIERE DECIR QUE LA INFORMACION CUENTA CON TODO LO REQUERIDO
@@ -33,7 +33,7 @@
                         valorNombreBeneficiario: textoNombreBeneficiario,
                         valorTelefono: textoTelefono,
                         valorDireccion: textoDireccion,
-                        valorAsociado: textoAsociado,
+                        valorProveedor: textoProveedor,
                     }, function(mensaje) {
                         //SE CREA UNA VARIABLE LA CUAL TRAERA EN TEXTO HTML LOS RESULTADOS QUE ARROJE EL ARCHIVO AL CUAL SE LE ENVIO LA INFORMACION "control_asociados.php"
                         $("#resultado_insert").html(mensaje);
@@ -75,11 +75,11 @@
                     <div class="col s12 m6 l6">
                         <br>
                         <div class="input-field">
-                            <i class="material-icons prefix">location_city</i>
-                            <input id="direccion_beneficiario" type="text" class="validate" data-length="60" required>
-                            <label for="direccion_beneficiario">*Dirección del beneficiario:</label>
+                            <i class="material-icons prefix">attach_money</i>
+                            <input id="cantidad_beneficio" type="number" class="validate" data-length="11" required>
+                            <label for="cantidad_beneficio">*Cantidad del beneficio:</label>
                         </div>
-                        <!-- CAJA DE SELECCION DE ASOCIADOS -->
+                        <!-- CAJA DE SELECCION DE PROVEEDORES -->
                         <div class="input-field">
                             <select id="proveedor" name="proveedor" class="browser-default">
                                 <!--OPTION PARA QUE LA SELECCION QUEDE POR DEFECTO VACIA-->
