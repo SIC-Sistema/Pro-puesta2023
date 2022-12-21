@@ -63,28 +63,17 @@ $Hoy = date('Y-m-d');
 	<ul class="sidenav indigo lighten-5" id="menu-responsive" style="width: 270px;">
 		<h2>Menú</h2>
     	<li><div class="divider"></div></li><br>
+		
+	    <li><a href="asociados.php"><i class="material-icons left">person</i><b>Asociados</b></a></li>    			
+	    
 		<li>
 	    	<ul class="collapsible collapsible-accordion">
 	    		<li>
-	    			<div class="collapsible-header"><i class="material-icons">library_books</i>Asociados <i class="material-icons right">arrow_drop_down</i></div>
-		      		<div class="collapsible-body indigo lighten-5">
-		      		    <span>
-		      			  <ul>
-							<li><a href = "proveedores_punto_venta.php"><i class="material-icons">person_pin</i>Proveedores </a></li>
-					      </ul>
-					    </span>
-		      		</div>    			
-	    		</li>	    			
-	    	</ul>	     				
-	    </li>
-		<li>
-	    	<ul class="collapsible collapsible-accordion">
-	    		<li>
-	    			<div class="collapsible-header"><i class="material-icons">library_add</i>Proveedores <i class="material-icons right">arrow_drop_down</i></div>
+	    			<div class="collapsible-header"><i class="material-icons">local_grocery_store</i>Proveedores <i class="material-icons right">arrow_drop_down</i></div>
 		      		<div class="collapsible-body indigo lighten-5">
 		      			<span>
 		      			  <ul>
-							<li><a href = "almacenes_punto_venta.php"><i class="material-icons">assignment_turned_in</i>Almacenes</a></li>
+							<li><a href = "new_proveedor.php"><i class="material-icons">add</i>Nuevo Proveedor</a></li>
 					      </ul>
 					    </span>
 		      		</div>    			
@@ -94,11 +83,11 @@ $Hoy = date('Y-m-d');
 		<li>
 	    	<ul class="collapsible collapsible-accordion">
 	    		<li>
-	    			<div class="collapsible-header"><i class="material-icons">local_grocery_store</i>Beneficiados <i class="material-icons right">arrow_drop_down</i></div>
+	    			<div class="collapsible-header"><i class="material-icons">accessibility</i>Beneficiados <i class="material-icons right">arrow_drop_down</i></div>
 		      		<div class="collapsible-body  indigo lighten-5">
 		      			<span>
 		      			  <ul>		     				
-							<li><a onclick = 'nueva_venta()'><i class="material-icons">monetization_on</i>Nueva Venta</a></li>   
+							<li><a href="new_beneficiario.php"><i class="material-icons">group_add</i>Nuevo Beneficio</a></li>   
 					      </ul>
 					    </span>
 		      		</div>    			
