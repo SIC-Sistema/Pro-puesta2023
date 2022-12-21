@@ -33,29 +33,26 @@ $Hoy = date('Y-m-d');
 				
 				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown2'><i class="material-icons left">local_grocery_store</i><b>Proveedores</b><i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown2' class='dropdown-content'>
-					<li><a class='dropdown-button light-blue-text text-darken-3' href="new_proveedor.php"><i class="material-icons left">add</i><b>Nuevo Proveedor</b> </a></li>
+					<li><a href = "new_proveedor.php" class="light-blue-text text-darken-3"><i class="material-icons">add</i>Nuevo Proveedor</a></li>
  				</ul>
  				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown5'><i class="material-icons left">accessibility</i><b>Beneficiados</b> <i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown5' class='dropdown-content'>   
-					<li><a class='dropdown-button light-blue-text text-darken-3' href="new_beneficiario.php"><i class="material-icons left">group_add</i><b>Nuevo Beneficiario</b> </a></li>
+					<li><a href="new_beneficiario.php" class="light-blue-text text-darken-3"><i class="material-icons">group_add</i>Nuevo Beneficio</a></li>   
 				</ul>
  				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown4'><b><?php echo $_SESSION['user_name'];?> </b><i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown4' class='dropdown-content'>
-				    <li><a href="../../SIC5.0" class="light-blue-text text-darken-3"><i class="material-icons">laptop_mac</i>Sistema SIC5.0 </a></li>
 				    <li><a href="../php/cerrar_sesion.php" class="light-blue-text text-darken-3"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
  				 </ul>
 			</ul>
 			<ul class="right hide-on-large-only hide-on-small-only">
 				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown10'><b><?php echo $_SESSION['user_name'];?> </b><i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown10' class='dropdown-content'>
-					<li><a href="../../SIC5.0" class="light-blue-text text-darken-3"><i class="material-icons">laptop_mac</i>Sistema SIC5.0 </a></li>
 				    <li><a href="../php/cerrar_sesion.php" class="light-blue-text text-darken-3"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
  				 </ul>
 			</ul>
 			<ul class="right hide-on-med-and-up">
 		        <li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown8'><i class="material-icons left">account_circle</i><b>></b></a></li>
 				<ul id='dropdown8' class='dropdown-content'>
-					<li><a href="../../SIC5.0" class="light-blue-text text-darken-3"><i class="material-icons">laptop_mac</i>Sistema SIC5.0 </a></li>
 				   <li><a href="../php/cerrar_sesion.php" class="light-blue-text text-darken-3"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
  				</ul>
 		    </ul>			
@@ -83,11 +80,11 @@ $Hoy = date('Y-m-d');
 		<li>
 	    	<ul class="collapsible collapsible-accordion">
 	    		<li>
-	    			<div class="collapsible-header"><i class="material-icons">local_grocery_store</i>Proveedores <i class="material-icons right">arrow_drop_down</i></div>
+	    			<div class="collapsible-header"><i class="material-icons">library_add</i>Proveedores <i class="material-icons right">arrow_drop_down</i></div>
 		      		<div class="collapsible-body indigo lighten-5">
 		      			<span>
 		      			  <ul>
-							<li><a class='dropdown-button' href="new_proveedor.php"><i class="material-icons left">add</i><b>Nuevo Proveedor</b> </a></li> 
+							<li><a href = "almacenes_punto_venta.php"><i class="material-icons">assignment_turned_in</i>Almacenes</a></li>
 					      </ul>
 					    </span>
 		      		</div>    			
@@ -97,11 +94,11 @@ $Hoy = date('Y-m-d');
 		<li>
 	    	<ul class="collapsible collapsible-accordion">
 	    		<li>
-	    			<div class="collapsible-header"><i class="material-icons">accessibility</i>Beneficiados <i class="material-icons right">arrow_drop_down</i></div>
+	    			<div class="collapsible-header"><i class="material-icons">local_grocery_store</i>Beneficiados <i class="material-icons right">arrow_drop_down</i></div>
 		      		<div class="collapsible-body  indigo lighten-5">
 		      			<span>
 		      			  <ul>		     				
-							<li><a class='dropdown-button' href="new_beneficiario.php"><i class="material-icons left">group_add</i><b>Nuevo Beneficiario</b> </a></li>   
+							<li><a onclick = 'nueva_venta()'><i class="material-icons">monetization_on</i>Nueva Venta</a></li>   
 					      </ul>
 					    </span>
 		      		</div>    			
