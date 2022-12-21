@@ -24,8 +24,8 @@ switch ($Accion) {
 		// Eliminamos cualquier tipo de código HTML o JavaScript
 		$valorNombreBeneficiario = $conn->real_escape_string($_POST["valorNombreBeneficiario"]);
 		$valorTelefono = $conn->real_escape_string($_POST["valorTelefono"]);
-		$valorDireccion = $conn->real_escape_string($_POST["valorDireccion"]);
-		$valorAsociado = $conn->real_escape_string($_POST["valorAsociado"]);
+		$valorCantidad = $conn->real_escape_string($_POST["valorCantidad"]);
+		$valorProveedor = $conn->real_escape_string($_POST["valorProveedor"]);
 
 		//ELIMINAR CODIGO PHP
 		//$valorNombreBeneficiario = str_replace($caracteres_malos, $caracteres_buenos, $valorNombreBeneficiario);
@@ -33,7 +33,7 @@ switch ($Accion) {
 		//$valorDireccion = str_replace($caracteres_malos, $caracteres_buenos, $valorDireccion);
         //$valorAsociado = str_replace($caracteres_malos, $caracteres_buenos, $valorAsociado);
 
-		$sql = "INSERT INTO `beneficiarios` (nombre, telefono, direccion, asociado, registro, fecha_registro) VALUES ('$valorNombreBeneficiario','$valorTelefono','$valorDireccion', $valorAsociado, $id_user,'$Fecha_hoy')";
+		$sql = "INSERT INTO `beneficiarios` (nombre, telefono, cantidad, proveedor, registro, fecha_registro) VALUES ('$valorNombreBeneficiario','$valorTelefono',$valorCantidad, $valorProveedor, $id_user,'$Fecha_hoy')";
 		// Si el usuario fue añadido con éxito
 		if (mysqli_query($conn,$sql)) {
 		    ?>
