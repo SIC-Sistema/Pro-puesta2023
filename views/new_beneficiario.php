@@ -105,7 +105,8 @@
                                 }//FIN else
                                 ?>
                             </select>
-                        </div>     
+                        </div>
+                        <?php echo $proveedor['nombre'],$S3,$cuenta;// MOSTRAMOS LA INFORMACION HTML?>     
                     </div>
                 </form>
                 <!-- BOTON QUE MANDA LLAMAR EL SCRIPT PARA QUE EL SCRIPT HAGA LO QUE LA FUNCION CONTENGA -->
