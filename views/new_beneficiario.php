@@ -1,9 +1,9 @@
 <html>
     <head>
-        <title> SIC | Nuevo Beneficiario </title>
+        <title>Pro-puesta2023 | Nuevo Beneficiario </title>
         <?php 
             //INCLUIMOS EL ARCHIVO QUE CONTIENE LA BARRA DE NAVEGACION TAMBIEN TIENE (scripts, conexion, modals)
-            include('nav.php');
+            include('fredyNav.php');
         ?>
         <script>
             //FUNCION QUE HACE LA INSERCION DEL ASOCIADO
@@ -81,22 +81,21 @@
                         </div>
                         <!-- CAJA DE SELECCION DE ASOCIADOS -->
                         <div class="input-field">
-                            <i class="material-icons prefix">person_pin</i>
-                            <select id="asociado" name="asociado" class="validate">
+                            <select id="proveedor" name="proveedor" class="browser-default">
                                 <!--OPTION PARA QUE LA SELECCION QUEDE POR DEFECTO VACIA-->
-                                <option value="0" select>Seleccione un asociado</option>
+                                <option value="0" select>Seleccione un proveedor</option>
                                 <?php 
                                 // REALIZAMOS LA CONSULTA A LA BASE DE DATOS MYSQL Y GUARDAMOS EN FORMARTO ARRAY EN UNA VARIABLE $consulta
-                                $consulta = mysqli_query($conn,"SELECT * FROM asociados");
+                                $consulta = mysqli_query($conn,"SELECT * FROM proveedores");
                                 //VERIFICAMOS QUE LA VARIABLE SI CONTENGA INFORMACION
                                 if (mysqli_num_rows($consulta) == 0) {
-                                    echo '<script>M.toast({html:"No se encontraron asociados.", classes: "rounded"})</script>';
+                                    echo '<script>M.toast({html:"No se encontraron proveedores.", classes: "rounded"})</script>';
                                 }else{
                                     //RECORREMOS UNO A UNO LOS ARTICULOS CON EL WHILE
-                                    while($asociados = mysqli_fetch_array($consulta)) {
+                                    while($proveedor = mysqli_fetch_array($consulta)) {
                                     //Output
                                         ?>                      
-                                        <option value="<?php echo $asociados['id'];?>"><?php echo $asociados['nombre'];// MOSTRAMOS LA INFORMACION HTML?></option>-->
+                                        <option value="<?php echo $proveedor['id'];?>"><?php echo $proveedor['nombre'];// MOSTRAMOS LA INFORMACION HTML?></option>-->
                                         <?php
                                     }//FIN while
                                 }//FIN else

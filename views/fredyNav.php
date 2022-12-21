@@ -29,34 +29,34 @@ $Hoy = date('Y-m-d');
 				<i class="material-icons">menu</i>
 			</a>
 			<ul class="right hide-on-med-and-down">
-				<li><a class='indigo-text' href="asociados.php"><i class="material-icons left">person</i><b>Asociados</b></a></li>
+				<li><a class='light-blue-text text-darken-3' href="asociados.php"><i class="material-icons left">person</i><b>Asociados</b></a></li>
 				
-				<li><a class='dropdown-button indigo-text' data-target='dropdown2'><i class="material-icons left">library_add</i><b>Proveedores</b><span class=" new badge pink" data-badge-caption="">7</span><i class="material-icons right">arrow_drop_down</i></a></li>
+				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown2'><i class="material-icons left">library_add</i><b>Proveedores</b><span class=" new badge pink" data-badge-caption="">7</span><i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown2' class='dropdown-content'>
-					<li><a href = "almacenes_punto_venta.php" class="indigo-text"><i class="material-icons">assignment_turned_in</i>Almacenes</a></li>
+					<li><a href = "almacenes_punto_venta.php" class="light-blue-text text-darken-3"><i class="material-icons">assignment_turned_in</i>Almacenes</a></li>
  				</ul>
- 				<li><a class='dropdown-button indigo-text' data-target='dropdown5'><i class="material-icons left">local_grocery_store</i><b>Beneficiados</b> <i class="material-icons right">arrow_drop_down</i></a></li>
+ 				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown5'><i class="material-icons left">local_grocery_store</i><b>Beneficiados</b> <i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown5' class='dropdown-content'>   
-					<li><a onclick = 'nueva_venta()' class="indigo-text"><i class="material-icons">monetization_on</i>Nueva Venta</a></li>   
+					<li><a class='dropdown-button light-blue-text text-darken-3' href="new_beneficiario.php"><i class="material-icons left">group_add</i><b>Nuevo Beneficiario</b> </a></li>
 				</ul>
- 				<li><a class='dropdown-button indigo-text' data-target='dropdown4'><b><?php echo $_SESSION['user_name'];?> </b><i class="material-icons right">arrow_drop_down</i></a></li>
+ 				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown4'><b><?php echo $_SESSION['user_name'];?> </b><i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown4' class='dropdown-content'>
-				    <li><a href="../../SIC5.0" class="indigo-text"><i class="material-icons">laptop_mac</i>Sistema SIC5.0 </a></li>
-				    <li><a href="../php/cerrar_sesion.php" class="indigo-text"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
+				    <li><a href="../../SIC5.0" class="light-blue-text text-darken-3"><i class="material-icons">laptop_mac</i>Sistema SIC5.0 </a></li>
+				    <li><a href="../php/cerrar_sesion.php" class="light-blue-text text-darken-3"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
  				 </ul>
 			</ul>
 			<ul class="right hide-on-large-only hide-on-small-only">
-				<li><a class='dropdown-button indigo-text' data-target='dropdown10'><b><?php echo $_SESSION['user_name'];?> </b><i class="material-icons right">arrow_drop_down</i></a></li>
+				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown10'><b><?php echo $_SESSION['user_name'];?> </b><i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown10' class='dropdown-content'>
-					<li><a href="../../SIC5.0" class="indigo-text"><i class="material-icons">laptop_mac</i>Sistema SIC5.0 </a></li>
-				    <li><a href="../php/cerrar_sesion.php" class="indigo-text"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
+					<li><a href="../../SIC5.0" class="light-blue-text text-darken-3"><i class="material-icons">laptop_mac</i>Sistema SIC5.0 </a></li>
+				    <li><a href="../php/cerrar_sesion.php" class="light-blue-text text-darken-3"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
  				 </ul>
 			</ul>
 			<ul class="right hide-on-med-and-up">
-		        <li><a class='dropdown-button indigo-text' data-target='dropdown8'><i class="material-icons left">account_circle</i><b>></b></a></li>
+		        <li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown8'><i class="material-icons left">account_circle</i><b>></b></a></li>
 				<ul id='dropdown8' class='dropdown-content'>
-					<li><a href="../../SIC5.0" class="indigo-text"><i class="material-icons">laptop_mac</i>Sistema SIC5.0 </a></li>
-				   <li><a href="../php/cerrar_sesion.php" class="indigo-text"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
+					<li><a href="../../SIC5.0" class="light-blue-text text-darken-3"><i class="material-icons">laptop_mac</i>Sistema SIC5.0 </a></li>
+				   <li><a href="../php/cerrar_sesion.php" class="light-blue-text text-darken-3"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
  				</ul>
 		    </ul>			
 		</div>		
@@ -101,7 +101,7 @@ $Hoy = date('Y-m-d');
 		      		<div class="collapsible-body  indigo lighten-5">
 		      			<span>
 		      			  <ul>		     				
-							<li><a onclick = 'nueva_venta()'><i class="material-icons">monetization_on</i>Nueva Venta</a></li>   
+							<li><a class='dropdown-button' href="new_beneficiario.php"><i class="material-icons left">group_add</i><b>Nuevo Beneficiario</b> </a></li>   
 					      </ul>
 					    </span>
 		      		</div>    			
