@@ -31,11 +31,11 @@ $Hoy = date('Y-m-d');
 			<ul class="right hide-on-med-and-down">
 				<li><a class='light-blue-text text-darken-3' href="asociados.php"><i class="material-icons left">person</i><b>Asociados</b></a></li>
 				
-				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown2'><i class="material-icons left">library_add</i><b>Proveedores</b><span class=" new badge pink" data-badge-caption="">7</span><i class="material-icons right">arrow_drop_down</i></a></li>
+				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown2'><i class="material-icons left">local_grocery_store</i><b>Proveedores</b><i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown2' class='dropdown-content'>
-					<li><a href = "almacenes_punto_venta.php" class="light-blue-text text-darken-3"><i class="material-icons">assignment_turned_in</i>Almacenes</a></li>
+					<li><a class='dropdown-button light-blue-text text-darken-3' href="new_proveedor.php"><i class="material-icons left">add</i><b>Nuevo Proveedor</b> </a></li>
  				</ul>
- 				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown5'><i class="material-icons left">local_grocery_store</i><b>Beneficiados</b> <i class="material-icons right">arrow_drop_down</i></a></li>
+ 				<li><a class='dropdown-button light-blue-text text-darken-3' data-target='dropdown5'><i class="material-icons left">accessibility</i><b>Beneficiados</b> <i class="material-icons right">arrow_drop_down</i></a></li>
 				<ul id='dropdown5' class='dropdown-content'>   
 					<li><a class='dropdown-button light-blue-text text-darken-3' href="new_beneficiario.php"><i class="material-icons left">group_add</i><b>Nuevo Beneficiario</b> </a></li>
 				</ul>
@@ -83,11 +83,11 @@ $Hoy = date('Y-m-d');
 		<li>
 	    	<ul class="collapsible collapsible-accordion">
 	    		<li>
-	    			<div class="collapsible-header"><i class="material-icons">library_add</i>Proveedores <i class="material-icons right">arrow_drop_down</i></div>
+	    			<div class="collapsible-header"><i class="material-icons">local_grocery_store</i>Proveedores <i class="material-icons right">arrow_drop_down</i></div>
 		      		<div class="collapsible-body indigo lighten-5">
 		      			<span>
 		      			  <ul>
-							<li><a href = "almacenes_punto_venta.php"><i class="material-icons">assignment_turned_in</i>Almacenes</a></li>
+							<li><a class='dropdown-button' href="new_proveedor.php"><i class="material-icons left">add</i><b>Nuevo Proveedor</b> </a></li> 
 					      </ul>
 					    </span>
 		      		</div>    			
@@ -97,7 +97,7 @@ $Hoy = date('Y-m-d');
 		<li>
 	    	<ul class="collapsible collapsible-accordion">
 	    		<li>
-	    			<div class="collapsible-header"><i class="material-icons">local_grocery_store</i>Beneficiados <i class="material-icons right">arrow_drop_down</i></div>
+	    			<div class="collapsible-header"><i class="material-icons">accessibility</i>Beneficiados <i class="material-icons right">arrow_drop_down</i></div>
 		      		<div class="collapsible-body  indigo lighten-5">
 		      			<span>
 		      			  <ul>		     				

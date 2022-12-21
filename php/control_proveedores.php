@@ -15,35 +15,28 @@ $Accion = $conn->real_escape_string($_POST['accion']);
 //UN SWITCH EL CUAL DECIDIRA QUE ACCION REALIZA DEL CRUD (Insertar = 0, Actualizar Info = 1, Actualizar Est = 2, Borrar = 3, Permisos = 4)
 switch ($Accion) {
     case 0:  ///////////////           IMPORTANTE               ///////////////
-        // $Accion es igual a 0 realiza:
-
-    	//CON POST RECIBIMOS TODAS LAS VARIABLES DEL FORMULARIO POR EL SCRIPT "form_usuario.php" QUE NESECITAMOS PARA INSERTAR
-    	$caracteres_malos = array("<", ">", "\"", "'", "/", "<", ">", "'", "/",";","?", "php", "echo","$","{","}","=");
-		$caracteres_buenos = array("", "", "", "", "", "", "", "", "","","", "","","", "","","");
+        // $Accion es igual a 0 realiza: 
 
 		// Eliminamos cualquier tipo de código HTML o JavaScript
-		$valorNombreBeneficiario = $conn->real_escape_string($_POST["valorNombreBeneficiario"]);
-		$valorTelefono = $conn->real_escape_string($_POST["valorTelefono"]);
-		$valorDireccion = $conn->real_escape_string($_POST["valorDireccion"]);
-		$valorAsociado = $conn->real_escape_string($_POST["valorAsociado"]);
+		$valorNombrePro = $conn->real_escape_string($_POST["valorNombrePro"]);
+		$valorDireccionPro = $conn->real_escape_string($_POST["valorDireccionPro"]);
+		$valorCorreoPro = $conn->real_escape_string($_POST["valorCorreoPro"]);
 
-		//ELIMINAR CODIGO PHP
-		//$valorNombreBeneficiario = str_replace($caracteres_malos, $caracteres_buenos, $valorNombreBeneficiario);
-		//$valorTelefono = str_replace($caracteres_malos, $caracteres_buenos, $valorTelefono);
-		//$valorDireccion = str_replace($caracteres_malos, $caracteres_buenos, $valorDireccion);
-        //$valorAsociado = str_replace($caracteres_malos, $caracteres_buenos, $valorAsociado);
-
-		$sql = "INSERT INTO `beneficiarios` (nombre, telefono, direccion, asociado, registro, fecha_registro) VALUES ('$valorNombreBeneficiario','$valorTelefono','$valorDireccion', $valorAsociado, $id_user,'$Fecha_hoy')";
-		// Si el usuario fue añadido con éxito
-		if (mysqli_query($conn,$sql)) {
-		    ?>
-            <script>
-                M.toast({html:"Beneficiario agregado exitosamente", classes: "rounded"});
-                setTimeout("location.href='../views/new_beneficiario.php'", 800);
-            </script>
-            <?php
-		} else {
-		    echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
+		if (mysqli_num_rows(mysqli_query($conn,"SELECT * FROM `proveedores` WHERE nombre = '$valorNombrePro' AND correo = '$valorCorreoPro'"))>0) {
+			echo '<script>M.toast({html:"Ya existe un proveedor con la misma información.", classes: "rounded"})</script>';
+		}else{
+			$sql = "INSERT INTO `proveedores` (nombre, direccion, correo, cuenta, fecha) VALUES ('$valorNombrePro','$valorDireccionPro','$valorCorreoPro', 0, '$Fecha_hoy')";
+			// Si el usuario fue añadido con éxito
+			if (mysqli_query($conn,$sql)) {
+			    ?>
+	            <script>
+	                M.toast({html:"Proveedor agregado exitosamente", classes: "rounded"});
+	                setTimeout("location.href='../views/proveedores.php'", 800);
+	            </script>
+	            <?php
+			} else {
+			    echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
+			}
 		}
         break;
     case 1:///////////////           IMPORTANTE               ///////////////
