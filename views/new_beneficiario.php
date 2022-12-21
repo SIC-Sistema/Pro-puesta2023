@@ -4,6 +4,8 @@
         <?php 
             //INCLUIMOS EL ARCHIVO QUE CONTIENE LA BARRA DE NAVEGACION TAMBIEN TIENE (scripts, conexion, modals)
             include('fredyNav.php');
+            //VARIABLE VACIA
+            $S3=" ";
         ?>
         <script>
             //FUNCION QUE HACE LA INSERCION DEL ASOCIADO
@@ -93,9 +95,11 @@
                                 }else{
                                     //RECORREMOS UNO A UNO LOS ARTICULOS CON EL WHILE
                                     while($proveedor = mysqli_fetch_array($consulta)) {
+                                        //SACAMOS EL DINERO DE LA CUENTA DE CADA PROVEEDOR
+                                        $cuenta=($proveedor['cuenta'] > 0)? '<b class = "green-text">$'.sprintf('%.2f',$proveedor['cuenta']).'</b>':'<b class = "red-text">$'.sprintf('%.2f',$proveedor['cuenta']).'</b>';
                                     //Output
                                         ?>                      
-                                        <option value="<?php echo $proveedor['id'];?>"><?php echo $proveedor['nombre'];// MOSTRAMOS LA INFORMACION HTML?></option>-->
+                                        <option value="<?php echo $proveedor['id'];?>"><?php echo $proveedor['nombre'],$S3,$cuenta;// MOSTRAMOS LA INFORMACION HTML?></option>-->
                                         <?php
                                     }//FIN while
                                 }//FIN else
