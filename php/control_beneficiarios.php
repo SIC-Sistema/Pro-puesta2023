@@ -27,19 +27,21 @@ switch ($Accion) {
 		$valorCantidad = $conn->real_escape_string($_POST["valorCantidad"]);
 		$valorProveedor = $conn->real_escape_string($_POST["valorProveedor"]);
 
-		//ELIMINAR CODIGO PHP
-		//$valorNombreBeneficiario = str_replace($caracteres_malos, $caracteres_buenos, $valorNombreBeneficiario);
-		//$valorTelefono = str_replace($caracteres_malos, $caracteres_buenos, $valorTelefono);
-		//$valorDireccion = str_replace($caracteres_malos, $caracteres_buenos, $valorDireccion);
-        //$valorAsociado = str_replace($caracteres_malos, $caracteres_buenos, $valorAsociado);
-
 		$sql = "INSERT INTO `beneficiarios` (nombre, telefono, cantidad, proveedor, registro, fecha_registro) VALUES ('$valorNombreBeneficiario','$valorTelefono',$valorCantidad, $valorProveedor, $id_user,'$Fecha_hoy')";
 		// Si el usuario fue añadido con éxito
 		if (mysqli_query($conn,$sql)) {
+		    mysqli_query($conn,"UPDATE `proveedores` SET salidas = salidas+$valorCantidad WHERE id = $valorProveedor");
+		    $ultimo =  mysqli_fetch_array(mysqli_query($conn, "SELECT MAX(id) AS id FROM `beneficiarios` WHERE registro = '$id_user' AND fecha_registro = '$Fecha_hoy'"));            
+        	$id = $ultimo['id'];
 		    ?>
             <script>
                 M.toast({html:"Beneficiario agregado exitosamente", classes: "rounded"});
                 setTimeout("location.href='../views/new_beneficiario.php'", 800);
+                //CREAR TICKET /php/comprobante_beneficio.php?id=
+                var a = document.createElement("a");
+	                a.target = "_blank";
+	                a.href = "../php/comprobante_beneficio.php?id="+<?php echo $id; ?>;
+	                a.click();
             </script>
             <?php
 		} else {
