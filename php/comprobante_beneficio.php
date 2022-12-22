@@ -20,7 +20,7 @@ require '../PHPMailer/vendor/autoload.php';
         mkdir($dir);
     }
     //NOMBRE DEL ARCHIVO QR
-    $filename = $dir.'test.png';
+    $filename = $dir.'comprobante_folio_'.$id.'.png';
 
     //PARAMENTROS DEL CÓDIGO QR
     $tamaño = 5;
