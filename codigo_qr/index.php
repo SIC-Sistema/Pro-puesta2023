@@ -1,6 +1,8 @@
 <?php
 //LIBRERIA PARA GENERAR CÓDIGOS QR 
 require 'phpqrcode/qrlib.php';
+//CARPETA PARA GUARDAR LOS CÓDIGOS QR GENERADOS
+$dir = 'temp/';
 //SI LA CARPETA PARA GUARDAR LOS COÓDIGOS QR NO EXISTE, SE CREA
 if(!file_exists($dir)){
     mkdir($dir);
