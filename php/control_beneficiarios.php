@@ -56,9 +56,9 @@ switch ($Accion) {
             //HACEMOS LA CONSULTA DEL cliente Y MOSTRAMOS LA INFOR EN FORMATO HTML
             $proveedor = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `proveedores` WHERE id=$id"));
             $cuenta=($proveedor['cuenta'] <= 0)? '<b class = "green-text">$'.sprintf('%.2f',$proveedor['cuenta']).'</b>':'<b class = "red-text">$'.sprintf('%.2f',$proveedor['cuenta']).'</b>';
-            $contenido .= '<br><h6><b>Cuenta: </b>'.$cuenta.'</h6>';
+            $contenido .= '<h6 right><b>Cuenta: </b>'.$cuenta.'<b>   Salidas: $'.sprintf('%.2f',$proveedor['salidas']).'</b></h6>';
         }else{
-            echo '<h5><b>Cuenta:</b></h5>';
+            echo '<h6><b>Cuenta: $0.00   Salidas: $0.00</b></h6>';
         }
         echo $contenido;// IMPRIMIMOS EL CONTENDIO QUE PUEDE IR VACIO SI ES $id = 0
         break;

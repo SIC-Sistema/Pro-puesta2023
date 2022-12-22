@@ -96,7 +96,7 @@
                             <label for="cantidad_beneficio">*Cantidad del beneficio:</label>
                         </div>
                         <!-- CAJA DE SELECCION DE PROVEEDORES -->
-                        <div class="input-field col s12 m7">
+                        <div class="input-field">
                             <select id="proveedor" name="proveedor" class="browser-default" onchange="javascript:showContent()">
                                 <!--OPTION PARA QUE LA SELECCION QUEDE POR DEFECTO VACIA-->
                                 <option value="0" select>Seleccione un proveedor</option>
@@ -118,9 +118,9 @@
                                 ?>
                             </select>
                         </div>
-                        <div class="col s12 m5 center">
+                        <div class="input-field rigth">
                             <!-- CREAMOS UN DIV EL CUAL TENGA id = "resultado_info"  PARA QUE EN ESTA PARTE NOS MUESTRE LOS RESULTADOS EN TEXTO HTML DEL SCRIPT EN FUNCION  -->
-                            <div id="resultado_info"><h5><b>Cuenta:</b></h5></div>
+                            <div id="resultado_info"><h6><b>Cuenta: $0.00  Salidas: $0.00</b></h6></div>
                         </div>                         
                     </div>
                 </form>
