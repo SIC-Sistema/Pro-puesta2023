@@ -5,39 +5,7 @@
   include('fredyNav.php');
   date_default_timezone_set('America/Mexico_City');
   $Fecha_hoy = date('Y-m-d');?>
-  <script>
-    //FUNCION QUE BORRA LOS COMPRAS (SE ACTIVA AL INICIAR EL BOTON BORRAR)
-      function borrar_venta_pv(id){
-        var answer = confirm("Deseas eliminar la venta N°"+id+"?");
-        if (answer) {
-          //MEDIANTE EL METODO POST ENVIAMOS UN ARRAY CON LA INFORMACION AL ARCHIVO EN LA DIRECCION "../php/control_proveedores.php"
-          $.post("../php/control_proveedores.php", {
-              //Cada valor se separa por una ,
-              id: id,
-              accion: 3,
-            }, function(mensaje) {
-              //SE CREA UNA VARIABLE LA CUAL TRAERA EN TEXTO HTML LOS RESULTADOS QUE ARROJE EL ARCHIVO AL CUAL SE LE ENVIO LA INFORMACION "control_proveedores.php"
-              $("#cancelar").html(mensaje);
-            }); //FIN post
-        }//FIN IF
-      };//FIN function
-
-    //FUNCION QUE BORRA TODOS LOS ARTICULOS DE TMP (SE ACTIVA AL INICIAR EL BOTON BORRAR)
-    function cancelar_factura(folio){
-      var answer = confirm("Deseas cancelar la factura "+folio+"?");
-      if (answer) {
-        //MEDIANTE EL METODO POST ENVIAMOS UN ARRAY CON LA INFORMACION AL ARCHIVO EN LA DIRECCION "../php/control_proveedores.php"
-        $.post("../php/control_proveedores.php", {
-          //Cada valor se separa por una ,
-          accion: 6,
-          folio: folio,
-        }, function(mensaje) {
-          //SE CREA UNA VARIABLE LA CUAL TRAERA EN TEXTO HTML LOS RESULTADOS QUE ARROJE EL ARCHIVO AL CUAL SE LE ENVIO LA INFORMACION "control_proveedores.php"
-          $("#cancelar").html(mensaje);
-        }); //FIN post
-      }//FIN IF
-    };//FIN function
-    
+  <script>    
     //FUNCION QUE HACE LA BUSQUEDA DE ALMACENES (SE ACTIVA AL INICIAR EL ARCHIVO O AL ECRIBIR ALGO EN EL BUSCADOR)
     function buscarProvecdor(){
       //PRIMERO VAMOS Y BUSCAMOS EN ESTE MISMO ARCHIVO EL TEXTO REQUERIDO Y LO ASIGNAMOS A UNA VARIABLE
@@ -52,8 +20,18 @@
             $("#ProvedorRes").html(mensaje);
       });//FIN post
     }//FIN function}
-
-    
+    //FUNCION QUE MANDA LA INFORMACION PARA CAMBIAR DE ESTATUS AL USUARIO ACTIVO-DESACTIVADO (SE ACCIONA CON BOTON)
+    function cambiar(estatus, id){
+      //MEDIANTE EL METODO POST ENVIAMOS UN ARRAY CON LA INFORMACION AL ARCHIVO EN LA DIRECCION "../php/control_proveedores.php"
+      $.post("../php/control_proveedores.php", { 
+          accion: 3,
+          valorId: id,
+          valorEstatus: estatus,
+        }, function(mensaje) {
+          //SE CREA UNA VARIABLE LA CUAL TRAERA EN TEXTO HTML LOS RESULTADOS QUE ARROJE EL ARCHIVO AL CUAL SE LE ENVIO LA INFORMACION "control_proveedores.php"
+          $("#cancelar").html(mensaje);
+        });  //FIN post
+    };//FIN function    
   </script>
 </head>
 <main>
@@ -85,8 +63,9 @@
                   <th>Salidas</th>
                   <th>Cuenta</th>
                   <th>Fecha</th>
+                  <th>Estatus</th>
+                  <th>Cambiar</th>
                   <th>Editar</th>
-                  <th>Borrar</th>
                 </tr>
               </thead>
               <tbody id="ProvedorRes">

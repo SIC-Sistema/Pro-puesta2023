@@ -65,6 +65,8 @@ switch ($Accion) {
             while($proveedor = mysqli_fetch_array($consulta)) {
 				//Output
 				$cuenta = ($proveedor['cuenta'] > 0)? '<b class = "red-text">$'.sprintf('%.2f', $proveedor['cuenta']).'</b>':'<b class = "green-text">$'.sprintf('%.2f', $proveedor['cuenta']).'</b>';
+				$estatus =($proveedor['activo'] == 0)? '<a class = "green-text"><b>ACTIVO</b></a>': '<a class = "red-text"><b>INIACTIVO</b></a>';
+				$BTN =($proveedor['activo'] == 0)?'<a onclick="cambiar(1,'.$proveedor['id'].');" class="btn-small waves-effect waves-light indigo">Desactivar</a>':'<a onclick="cambiar(0,'.$proveedor['id'].');" class="btn-small waves-effect waves-light green">Activar</a>';
                 $contenido .= '			
 		          <tr>
 		            <td>'.$proveedor['id'].'</td>
@@ -74,8 +76,9 @@ switch ($Accion) {
 		            <td>$'.sprintf('%.2f', $proveedor['salidas']).'</td>
 		            <td>'.$cuenta.'</td>
 		            <td>'.$proveedor['fecha'].'</td>
+		            <td>'.$estatus.'</td>
+		            <td>'.$BTN.'</td>
 		            <td><br><form method="post" action="../views/editar_proveedor.php"><input id="id" name="id" type="hidden" value="'.$proveedor['id'].'"><button class="btn-floating waves-effect waves-light green"><i class="material-icons">edit</i></button></form></td>
-		            <td><a onclick="borrar_proveedor('.$proveedor['id'].')" class="btn btn-floating red  darken-3 waves-effect waves-light"><i class="material-icons">delete</i></a></td>
 		          </tr>';
 
 			}//FIN while
@@ -108,69 +111,23 @@ switch ($Accion) {
     case 3:///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 3 realiza:
 
-    	//CON POST RECIBIMOS LA VARIABLE DEL BOTON POR EL SCRIPT DE "usuarios.php" QUE NESECITAMOS PARA BORRAR
+    	//CON POST RECIBIMOS TODAS LAS VARIABLES DEL FORMULARIO POR EL SCRIPT "usuarios.php" QUE NESECITAMOS PARA ACTUALIZAR
     	$valorId = $conn->real_escape_string($_POST["valorId"]);
+		$valorEstatus = $conn->real_escape_string($_POST["valorEstatus"]);
 
-		#VERIFICAMOS QUE SE BORRE CORRECTAMENTE EL USUARIO DE `users`
-		if(mysqli_query($conn, "DELETE FROM users WHERE user_id=$valorId")){
-			#SI ES ELIMINADO MANDAR MSJ CON ALERTA
-		    echo '<script>M.toast({html:"Usuario eliminado.", classes: "rounded"})</script>';
-			echo '<script>recargar_usuarios()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
+		//CREAMOS LA SENTENCIA SQL PARA ACTUALIZAR
+		$sql= "UPDATE proveedores SET activo = '$valorEstatus' WHERE id = '$valorId'";
+		//VERIIFCAMOS QUE SE HAYA REALIZADO LA SENTENCIA EN LA BASE DE DATOS
+		if(mysqli_query($conn, $sql)){
+		    ?>
+	        <script>
+	            M.toast({html:"Proveedor actualizado", classes: "rounded"});
+	            setTimeout("location.href='../views/list_proveedores.php'", 800);
+	        </script>
+	        <?php
 		}else{
-			#SI NO ES BORRADO MANDAR UN MSJ CON ALERTA
 		    echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
 		}
         break;
-	case 4:///////////////           IMPORTANTE               ///////////////
-    	//$Accion es gual a 4 relizar:
-
-    	//CON POST RECIBIMOS TODAS LAS VARIABLES DEL FORMULARIO POR EL SCRIPT "permisos.php" QUE NESECITAMOS PARA CAMBIARLOS
-    	$id = $conn->real_escape_string($_POST["id"]);
-    	$Banco = $conn->real_escape_string($_POST["Banco"]);
-    	$Credito = $conn->real_escape_string($_POST["Credito"]);
-    	$BorrarPagos = $conn->real_escape_string($_POST["BorrarPagos"]);
-    	$BorrarClientes = $conn->real_escape_string($_POST["BorrarClientes"]);
-    	$BorrarVentas = $conn->real_escape_string($_POST["BorrarVentas"]);
-		$BorrarAlmacenes = $conn->real_escape_string($_POST["BorrarAlmacenes"]);
-    	$Ventas = $conn->real_escape_string($_POST["Ventas"]);
-    	$Compras = $conn->real_escape_string($_POST["Compras"]);
-    	$Articulos = $conn->real_escape_string($_POST["Articulos"]);
-		$Almacen = $conn->real_escape_string($_POST["valorAlmacen"]);
-    	//CREAMOS LA SENTENCIA SQL PARA HACER LA ACTUALIZACION DE LOS PERMISOS DEL USUARIO Y LA GUARDAMOS EN UNA VARIABLE
-		$sql = "UPDATE users SET banco='$Banco', credito='$Credito', b_pagos='$BorrarPagos', b_clientes = '$BorrarClientes', b_ventas = '$BorrarVentas', ventas = '$Ventas', compras = '$Compras',  b_articulos = '$Articulos', b_almacenes = '$BorrarAlmacenes', almacen = '$Almacen' WHERE user_id='$id'";
-		//VERIFICAMOS QUE SE EJECUTE LA SENTENCIA EN MYSQL 
-		if(mysqli_query($conn, $sql)){
-			echo '<script>M.toast({html:"Permisos actualizados correctamente.", classes: "rounded"})</script>';
-			echo '<script>recargar_usuarios()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
-		}else{
-			echo '<script>M.toast({html:"Ha ocurrido un error.", classes: "rounded"})</script>';	
-		}
-    	break;
-    case 5:///////////////           IMPORTANTE               ///////////////
-    	// $Accion es igual a 5 realiza:
-
-    	//CON POST RECIBIMOS TODAS LAS VARIABLES DEL FORMULARIO POR EL SCRIPT "perfil_user.php" QUE NESECITAMOS PARA ACTUALIZAR
-    	$id_user = $conn->real_escape_string($_POST["valorId"]);
-		$Password_new = $conn->real_escape_string($_POST["valorContra"]);
-		$Password_old = $conn->real_escape_string($_POST["valorContraAnterior"]);
-
-		$user=mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$id_user'"));
-
-		if (password_verify($Password_old, $user['user_password_hash'])) {
-			$Password_new_hash = password_hash($Password_new, PASSWORD_DEFAULT);
-			//CREAMOS LA SENTENCIA SQL PARA ACTUALIZAR
-			$sql= "UPDATE users SET user_password_hash = '$Password_new_hash' WHERE user_id = '$id_user'";
-			//VERIIFCAMOS QUE SE HAYA REALIZADO LA SENTENCIA EN LA BASE DE DATOS
-			if(mysqli_query($conn, $sql)){
-			    echo '<script>M.toast({html:"Usuario actualizado (Contraseña)..", classes: "rounded"})</script>';
-				echo '<script>cerrar_sesion()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
-			}else{
-			    echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
-			}
-		}else{
-			#SI LAS CONTRASEÑA ANTERIOR NO ES IGUAL MANDA UN MSJ CON ALERTA
-		    echo '<script>M.toast({html:"La contraseña anterior no coincide.", classes: "rounded"})</script>';
-		}
-    	break;
 }// FIN switch
 mysqli_close($conn);
