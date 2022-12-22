@@ -9,10 +9,10 @@ date_default_timezone_set('America/Mexico_City');
 $Fecha_hoy = date('Y-m-d');// FECHA ACTUAL
 $id_user = $_SESSION['user_id'];// ID DEL USUARIO LOGEADO
 
-//CON POST TOMAMOS UN VALOR DEL 0 AL 4 PARA VER QUE ACCION HACER (Insertar = 0, consulta = 1, Actualizar = 2, Borrar = 3, Permisos = 4)
+//CON POST TOMAMOS UN VALOR DEL 0 AL 4 PARA VER QUE ACCION HACER (Insertar = 0, consulta = 1, Actualizar = 2, cambiar activo = 3)
 $Accion = $conn->real_escape_string($_POST['accion']);
 
-//UN SWITCH EL CUAL DECIDIRA QUE ACCION REALIZA DEL CRUD (Insertar = 0, consulta = 1, Actualizar = 2, Borrar = 3, Permisos = 4)
+//UN SWITCH EL CUAL DECIDIRA QUE ACCION REALIZA DEL CRUD (Insertar = 0, consulta = 1, Actualizar = 2, cambiar activo = 3)
 switch ($Accion) {
     case 0:  ///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 0 realiza: 

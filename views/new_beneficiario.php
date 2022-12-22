@@ -42,6 +42,20 @@
                     }); 
                 }//FIN else CONDICIONES
             };//FIN function 
+            //FUINCION QUE AL SELECCIONAR UN Cliente MUESTRA SU INFORMACION
+            function showContent() {
+                var textoProveedor = $("select#proveedor").val();
+                
+                //MEDIANTE EL METODO POST ENVIAMOS UN ARRAY CON LA INFORMACION AL ARCHIVO EN LA DIRECCION "../php/control_beneficiarios.php"
+                $.post("../php/control_beneficiarios.php", {
+                  //Cada valor se separa por una ,
+                    accion: 1,
+                    proveedor: textoProveedor,
+                  }, function(mensaje) {
+                    //SE CREA UNA VARIABLE LA CUAL TRAERA EN TEXTO HTML LOS RESULTADOS QUE ARROJE EL ARCHIVO AL CUAL SE LE ENVIO LA INFORMACION "control_beneficiarios.php"
+                    $("#resultado_info").html(mensaje);
+                });  
+            };
         </script>
     </head>
     <main>
@@ -82,8 +96,8 @@
                             <label for="cantidad_beneficio">*Cantidad del beneficio:</label>
                         </div>
                         <!-- CAJA DE SELECCION DE PROVEEDORES -->
-                        <div class="input-field">
-                            <select id="proveedor" name="proveedor" class="browser-default">
+                        <div class="input-field col s12 m7">
+                            <select id="proveedor" name="proveedor" class="browser-default" onchange="javascript:showContent()">
                                 <!--OPTION PARA QUE LA SELECCION QUEDE POR DEFECTO VACIA-->
                                 <option value="0" select>Seleccione un proveedor</option>
                                 <?php 
@@ -95,18 +109,19 @@
                                 }else{
                                     //RECORREMOS UNO A UNO LOS ARTICULOS CON EL WHILE
                                     while($proveedor = mysqli_fetch_array($consulta)) {
-                                        //SACAMOS EL DINERO DE LA CUENTA DE CADA PROVEEDOR
-                                        $cuenta=($proveedor['cuenta'] > 0)? '<b class = "green-text">$'.sprintf('%.2f',$proveedor['cuenta']).'</b>':'<b class = "red-text">$'.sprintf('%.2f',$proveedor['cuenta']).'</b>';
                                     //Output
                                         ?>                      
-                                        <option value="<?php echo $proveedor['id'];?>"><?php echo $proveedor['nombre'],$S3,$cuenta;// MOSTRAMOS LA INFORMACION HTML?></option>-->
+                                        <option value="<?php echo $proveedor['id'];?>"><?php echo $proveedor['id'].'-'.$proveedor['nombre'];// MOSTRAMOS LA INFORMACION HTML?></option>-->
                                         <?php
                                     }//FIN while
                                 }//FIN else
                                 ?>
                             </select>
                         </div>
-                        <?php echo $proveedor['nombre'],$S3,$cuenta;// MOSTRAMOS LA INFORMACION HTML?>     
+                        <div class="col s12 m5 center">
+                            <!-- CREAMOS UN DIV EL CUAL TENGA id = "resultado_info"  PARA QUE EN ESTA PARTE NOS MUESTRE LOS RESULTADOS EN TEXTO HTML DEL SCRIPT EN FUNCION  -->
+                            <div id="resultado_info"><h5><b>Cuenta:</b></h5></div>
+                        </div>                         
                     </div>
                 </form>
                 <!-- BOTON QUE MANDA LLAMAR EL SCRIPT PARA QUE EL SCRIPT HAGA LO QUE LA FUNCION CONTENGA -->

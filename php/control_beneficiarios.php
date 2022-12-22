@@ -9,10 +9,10 @@ date_default_timezone_set('America/Mexico_City');
 $Fecha_hoy = date('Y-m-d');// FECHA ACTUAL
 $id_user = $_SESSION['user_id'];// ID DEL USUARIO LOGEADO
 
-//CON POST TOMAMOS UN VALOR DEL 0 AL 4 PARA VER QUE ACCION HACER (Insertar = 0, Actualizar Info = 1, Actualizar Est = 2, Borrar = 3, Permisos = 4)
+//CON POST TOMAMOS UN VALOR DEL 0 AL 4 PARA VER QUE ACCION HACER (Insertar = 0, buscar Info = 1)
 $Accion = $conn->real_escape_string($_POST['accion']);
 
-//UN SWITCH EL CUAL DECIDIRA QUE ACCION REALIZA DEL CRUD (Insertar = 0, Actualizar Info = 1, Actualizar Est = 2, Borrar = 3, Permisos = 4)
+//UN SWITCH EL CUAL DECIDIRA QUE ACCION REALIZA DEL CRUD (Insertar = 0, buscar Info = 1)
 switch ($Accion) {
     case 0:  ///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 0 realiza:
@@ -48,30 +48,19 @@ switch ($Accion) {
         break;
     case 1:///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 1 realiza:
-
-		$user_id = $conn->real_escape_string($_POST['valorId']);//VALOR DEL USUARIO A EDITAR POR POST "perfil_user.php"
-
-		//REALIZAMOS LA CONSULTA PARA SACAR LA INFORMACION DEL USUARIO Y ASIGNAMOS EL ARRAY A UNA VARIABLE $area
-		$area = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM users WHERE user_id=$id_user"));
-
-		if($area['area'] == "Administrador" OR $user_id == $id_user){
-			//CON POST RECIBIMOS TODAS LAS VARIABLES DEL FORMULARIO POR EL SCRIPT "perfil_user.php" QUE NESECITAMOS PARA ACTUALIZAR
-			$Nombres = $conn->real_escape_string($_POST['valorNombres']);
-			$Apellidos = $conn->real_escape_string($_POST['valorApellidos']);
-			$Usuario = $conn->real_escape_string($_POST['valorUsuario']);
-			$Email = $conn->real_escape_string($_POST['valorEmail']);
-			//CREAMOS LA SENTENCIA SQL PARA HACER LA ACTUALIZACION DE LA INFORMACION DEL USUARIO Y LA GUARDAMOS EN UNA VARIABLE
-			$sql = "UPDATE users SET firstname='$Nombres', lastname='$Apellidos', user_name='$Usuario', user_email = '$Email' WHERE user_id='$user_id'";
-			//VERIFICAMOS QUE SE EJECUTE LA SENTENCIA EN MYSQL 
-			if(mysqli_query($conn, $sql)){
-				echo '<script>M.toast({html:"El perfil se actualizó correctamente.", classes: "rounded"})</script>';
-				echo '<script>recargar_usuarios()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
-			}else{
-				echo '<script>M.toast({html:"Ha ocurrido un error.", classes: "rounded"})</script>';	
-			}
-		}else{
-		  echo "<script >M.toast({html: 'Sólo un administrador o el mismo usuario puede editar un perfil.', classes: 'rounded'});</script>";
-		}
+//CON POST RECIBIMOS EL ID DEL PROVEEDOR DEL FORMULARIO POR EL SCRIPT "add_compra.php" QUE NESECITAMOS PARA BUSCAR
+    	$id = $conn->real_escape_string($_POST['proveedor']);    
+        $contenido = '';//CREAMOS UNA VARIABLE VACIA PARA IR LLENANDO CON LA INFORMACION EN FORMATO
+        //VERIFICAMOS SI CONTIENE ALGO DE TEXTO LA VARIABLE
+        if ($id != 0) {
+            //HACEMOS LA CONSULTA DEL cliente Y MOSTRAMOS LA INFOR EN FORMATO HTML
+            $proveedor = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `proveedores` WHERE id=$id"));
+            $cuenta=($proveedor['cuenta'] <= 0)? '<b class = "green-text">$'.sprintf('%.2f',$proveedor['cuenta']).'</b>':'<b class = "red-text">$'.sprintf('%.2f',$proveedor['cuenta']).'</b>';
+            $contenido .= '<br><h6><b>Cuenta: </b>'.$cuenta.'</h6>';
+        }else{
+            echo '<h5><b>Cuenta:</b></h5>';
+        }
+        echo $contenido;// IMPRIMIMOS EL CONTENDIO QUE PUEDE IR VACIO SI ES $id = 0
         break;
     case 2:///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 2 realiza:
