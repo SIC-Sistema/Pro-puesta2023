@@ -55,7 +55,7 @@ class PDF extends FPDF{
     $pdf->SetX(6);
     $asociado = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `asociados` WHERE id = $id"));
     $pdf->SetFont('Courier','B', 9);
-    $pdf->MultiCell(69,3,utf8_decode('NOMBRE: '.$asociado['nombre']."\n".'TELEFONO:  '.$asociado['telefono']),0,'L',0);
+    $pdf->MultiCell(69,3,utf8_decode('N° ASOCIADO: '.$asociado['id']."\n".'NOMBRE: '.$asociado['nombre']."\n".'TELEFONO:  '.$asociado['telefono']),0,'L',0);
     $pdf->SetY($pdf->GetY());
     $pdf->SetX(6);    
     $pdf->SetFont('Helvetica','', 8);

@@ -64,18 +64,21 @@ switch ($Accion) {
         break;
     case 2:///////////////           IMPORTANTE               ///////////////
         // $Accion es igual a 2 realiza:
+		$valorNombre = $conn->real_escape_string($_POST["valorNombre"]);
+		$valorTelefono = $conn->real_escape_string($_POST["valorTelefono"]);
+		$valorCorreo = $conn->real_escape_string($_POST["valorCorreo"]);
+		$valorEmpresa = $conn->real_escape_string($_POST["valorEmpresa"]);
 
-    	//CON POST RECIBIMOS TODAS LAS VARIABLES DEL FORMULARIO POR EL SCRIPT "usuarios.php" QUE NESECITAMOS PARA ACTUALIZAR
-    	$valorId = $conn->real_escape_string($_POST["valorId"]);
-		$valorEstatus = $conn->real_escape_string($_POST["valorEstatus"]);
-
-		//CREAMOS LA SENTENCIA SQL PARA ACTUALIZAR
-		$sql= "UPDATE users SET estatus = '$valorEstatus' WHERE user_id = '$valorId'";
-		//VERIIFCAMOS QUE SE HAYA REALIZADO LA SENTENCIA EN LA BASE DE DATOS
-		if(mysqli_query($conn, $sql)){
-		    echo '<script>M.toast({html:"Usuario actualizado..", classes: "rounded"})</script>';
-			echo '<script>recargar_usuarios()</script>';// REDIRECCIONAMOS (FUNCION ESTA EN ARCHIVO modals.php)
-		}else{
+		$sql = "INSERT INTO `reunion` (nombre, telefono, correo, empresa) VALUES ('$valorNombre','$valorTelefono','$valorCorreo', '$valorEmpresa')";
+		// Si el usuario fue añadido con éxito
+		if (mysqli_query($conn,$sql)) {
+		    ?>
+            <script>
+                M.toast({html:"Asistente agregado exitosamente", classes: "rounded"});
+                setTimeout("location.href='../views/reunion.php'", 800);
+            </script>
+            <?php
+		} else {
 		    echo '<script>M.toast({html:"Hubo un error, intentelo mas tarde.", classes: "rounded"})</script>';
 		}
         break;
