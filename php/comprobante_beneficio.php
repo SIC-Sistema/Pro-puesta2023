@@ -12,7 +12,7 @@ require '../PHPMailer/vendor/autoload.php';
     include('is_logged.php');
     $id =$_GET['id'];//TOMAMOS EL ID DE LA VENTA PREVIAMENTE CREADO
     //LIBRERIA PARA GENERAR CÓDIGOS QR 
-    require '../codigo-qr/phpqrcode/qrlib.php';
+    require '../codigo_qr/phpqrcode/qrlib.php';
     //CARPETA PARA GUARDAR LOS CÓDIGOS QR GENERADOS
     $dir = '../img/qr/';
     //SI LA CARPETA PARA GUARDAR LOS COÓDIGOS QR NO EXISTE, SE CREA
@@ -66,12 +66,12 @@ class PDF extends FPDF{
     $pdf->MultiCell(69,4,utf8_decode('TICKET COMPROBANTE'),0,'C',0);
     $pdf->SetY($pdf->GetY());
     $pdf->SetX(6);
-    $pdf->Image($filename, 30, 6, 20, 21, 'png'); /// LOGO SIC
 
     $pdf->SetFont('Helvetica','', 8);
     $pdf->MultiCell(69,3,utf8_decode('-----------------------------------------------------------------------'),0,'L',0);   
+    $pdf->Image($filename, 30, $pdf->GetY()+3, 20, 21, 'png'); /// LOGO SIC
     
-    $pdf->SetY($pdf->GetY()+3);
+    $pdf->SetY($pdf->GetY()+25);
     $pdf->SetX(6);    
     $pdf->SetFont('Helvetica','B', 9);      
     $pdf->MultiCell(69,4,utf8_decode('¡GRACIAS POR TU APORTACION!'."\n".'PRO-PUESTA 2023 LO USARA PARA UN BIEN MAYOR'),0,'C',0);
