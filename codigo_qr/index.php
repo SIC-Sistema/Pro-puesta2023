@@ -14,7 +14,7 @@ $filename = $dir.'test.png';
 $tamaño = 5;
 $level = 'H';
 $frameSize = 3;
-$contenido = 'https://warhammer40k.fandom.com/wiki/Warhammer_40k_Wiki';
+$contenido = 'https://sicsom.com/Pro-puesta2023/views/admin.php';
 
 //UTILIZAMOS LA LIBRERIA
 QRcode::png($contenido, $filename, $level, $tamaño, $frameSize);
